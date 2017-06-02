@@ -1,55 +1,44 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-# (C) 2015 Daniel Vrátil <dvratil@kde.org>
+# (C) 2017 Daniel Vrátil <dvratil@kde.org>
 # License: GPL
-#
-# Requires: Python 2 or 3 and compatible GitPython
-#
 
-# https://github.com/gitpython-developers/GitPython
-import git
-import ConfigParser
 import os
 import sys
 
-repo = git.Repo(os.getcwd())
+def remoteIsGerrit(remoteName, remoteUrl):
+    # if the remote is called "Gerit", assume it's gerrit
+    if 'gerrit' in remoteName:
+        return True
+    # if the remote URL contains the default gerrit port, assume it's gerrit
+    if ':29418/' in remoteUrl:
+        return True
 
-# Don't do anything if an identity is already configured in this
-# repo's .git/config
-config = repo.config_reader(config_level = 'repository')
-try:
-    # The value of user.email is non-empty, stop here
-    if config.get_value('user', 'email'):
-        sys.exit(0)
-except (ConfigParser.NoSectionError, ConfigParser.NoOptionError):
-    # Section or option does not exist, continue
-    pass
+    # TODO: Add custom checks to match your non-standard gerrit configuration
+
+    return False
+
+def main():
+    # name and URL of the remote we are pushing into is passed as arguments
+    if not remoteIsGerrit(sys.argv[1], sys.argv[2]):
+        # If we are not pushing into gerrit, then simply allow the push
+        return
+
+    # The pushed refs are passed in via stdin
+    for line in sys.stdin:
+        # line = "localRef localRev remoteRef remoteRev"
+        remoteRef = line.split(' ')[2]
+        # Check if the remoteRef contains the typical Gerrit 'refs/for/foo'.
+        if not remoteRef.startswith('refs/for/'):
+            print('!!')
+            print('!! You are pushing directly into git instead of Gerrit !!')
+            print('!! Do you want to continue? [y/N] ', end = '', flush = True)
+            if open('/dev/tty', 'rb').readline().decode().strip().lower() == 'y':
+                return
+            else:
+                sys.exit(1)
 
 
-origin = repo.remote('origin')
-if not origin:
-    print('** Failed to detect remote origin, identity not updated! **')
-    sys.exit(0)
-
-# This is where you adjust the code to fit your needs
-name = None
-if 'kde.org' in origin.url or origin.url.startswith('kde:'):
-    email = 'dvratil@kde.org'
-elif 'fedoraproject.org' in origin.url:
-    name = 'Daniel Vrátil'
-    email = 'dvratil@fedoraproject.org'
-elif 'kdab.com' in origin.url or 'code.qt.io' in origin.url or 'codereview.qt-project.org' in origin.url:
-    name = 'Daniel Vrátil'
-    email = 'daniel.vratil@kdab.com'
-else:
-    print('** Failed to detect identity! **')
-    sys.exit(0)
-
-# Write the option to .git/config
-config = repo.config_writer()
-if name:
-    config.set_value('user', 'name', name)
-config.set_value('user', 'email', email)
-config.release()
-print('** User identity for this repository set to \'%s\' **' % email)
+if __name__ == "__main__":
+    main()
