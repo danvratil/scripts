@@ -19,5 +19,7 @@ Copy scripts to ~/.git-templates/hooks/ and make them executable
 
 In ~/.gitconfig add
 
- [init]
+```
+[init]
     templatedir = ~/.git-templates
+```
