@@ -4,7 +4,7 @@ from willie.module import HALFOP
 import psycopg2
 from itertools import islice
 
-PageSize = 20
+PageSize = 10
 
 #class Bot:
 #    def say(self, text):
