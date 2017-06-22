@@ -26,9 +26,9 @@ except (ConfigParser.NoSectionError, ConfigParser.NoOptionError):
     # Section or option does not exist, continue
     pass
 
-
-origin = repo.remote('origin')
-if not origin:
+try:
+    origin = repo.remote('origin')
+except ValueError:
     print('** Failed to detect remote origin, identity not updated! **')
     sys.exit(0)
 
