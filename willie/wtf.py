@@ -34,10 +34,10 @@ def random_wtf(bot, db, cnt):
 
 def find_wtf(bot, db, keyword):
     cur = db.cursor()
-    cur.execute("SELECT keyword, STRING_AGG(value, ', ' ORDER BY created ASC) FROM wtf WHERE keyword = %s GROUP BY keyword", (keyword,))
+    cur.execute("SELECT keyword, STRING_AGG(value, ', ' ORDER BY created ASC) FROM wtf WHERE keyword ILIKE %s GROUP BY keyword", (keyword,))
     if cur.rowcount > 0:
-        res = cur.fetchone()
-        bot.say('%s: %s' % (res[0], res[1]))
+        for res in cur.fetchall():
+	    bot.say('%s: %s' % (res[0], res[1]))
     else:
         bot.say('%s: WAT?' % keyword)
 
@@ -132,7 +132,7 @@ def wtfsearch(bot, trigger):
     cur = db.cursor()
     cur.execute("SELECT keyword, STRING_AGG(value, ', ' ORDER BY created ASC) FROM wtf \
                  WHERE keyword IN ( \
-                     SELECT DISTINCT keyword FROM wtf WHERE keyword LIKE %s OR value LIKE %s) \
+                     SELECT DISTINCT keyword FROM wtf WHERE keyword ILIKE %s OR value ILIKE %s) \
                  GROUP BY keyword LIMIT %s OFFSET %s",
                  (query,query, PageSize + 1, page * PageSize))
     for res in islice(cur, 0, PageSize):
