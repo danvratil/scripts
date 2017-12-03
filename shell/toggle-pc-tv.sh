@@ -36,7 +36,7 @@ else
     SINK_ON="${PC_SINK}"
     xrandr --output ${TV_OUTPUT} --off \
            --output ${PC1_OUTPUT} --mode ${PC1_MODE} --primary \
-           --output ${PC2_OUTPUT} --mode ${PC2_MODE} --right-of ${PC1_OUTPUT} --rotate left
+           --output ${PC2_OUTPUT} --mode ${PC2_MODE} --right-of ${PC1_OUTPUT} --rotate left --scale 1.5x1.5
 fi
 
 echo "New state:"
