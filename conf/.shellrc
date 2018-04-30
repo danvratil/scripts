@@ -44,13 +44,7 @@ alias 'kdab'='cd /data/KDAB'
 alias 'pastekde'='pastebinit -b paste.kde.org'
 alias 'qttest'='./target_wrapper.sh'
 alias 'venv'='source ./venv/bin/activate'
-
-# KDAB
-alias 'kurth-vpn'='$(cd /data/KDAB/Kurth/vpn; sudo openvpn DaVr@fw.kurthelectronic.de.ovpn)'
-alias 'kdab-vpn'='$(cd /home/dvratil/Documents/Work/KDAB/VPN; sudo openvpn office-berlin.ovpn)'
-alias 'start-kurth-arm'='virsh -c qemu:///system start ubuntu14.04'
-alias 'ke3700-vnc-tunnel'='ssh -L 5901:192.168.150.205:5900 kurth-rpi -N'
-alias 'keack'='ack --ignore-dir=build-desktop-qt4 --ignore-dir=build-desktop-qt5 --ignore-dir=build-desktop --ignore-dir=build-arm --ignore-dir=build-arm-qt4 --ignore-dir=build-arm-qt5 --ignore-dir=externallibs --ignore-dir=log4qt'
+alias 'arc'='/data/random/arcanist/bin/arc'
 
 # Czechitas
 alias 'czechitas'='cd /home/dvratil/Documents/Work/Czechitas'
