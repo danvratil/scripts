@@ -29,13 +29,13 @@ if [[ $pc1_on == 1 && $tv_on == 0 ]]; then
     # PC's on -> turn on TV, turn off PC
     SINK_ON="${TV_SINK}"
     xrandr --output ${PC1_OUTPUT} --off \
-           --output ${PC2_OUTPUT} --off \
-           --output ${TV_OUTPUT} --mode ${TV_MODE} || echo "Failed to change screen output"
+           --output ${PC2_OUTPUT} --off
+    xrandr --output ${TV_OUTPUT} --mode ${TV_MODE} || echo "Failed to change screen output"
 else
     # TV's on or both off -> turn on PC, turn off TV
     SINK_ON="${PC_SINK}"
-    xrandr --output ${TV_OUTPUT} --off \
-           --output ${PC1_OUTPUT} --mode ${PC1_MODE} --primary \
+    xrandr --output ${TV_OUTPUT} --off
+    xrandr --output ${PC1_OUTPUT} --mode ${PC1_MODE} --primary \
            --output ${PC2_OUTPUT} --mode ${PC2_MODE} --right-of ${PC1_OUTPUT} --rotate left --scale 1.5x1.5
 fi
 
