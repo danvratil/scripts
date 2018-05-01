@@ -13,7 +13,7 @@ global
     # it easier to ensure that you have all the modules needed, but the
     # dependencies are not very fine-grained so this can result in quite a few
     # modules being installed that you didn't need.
-    include-dependencies true
+    include-dependencies false
 
     # Install directory for KDE software
     kdedir /data/install/kde
