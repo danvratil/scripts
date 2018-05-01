@@ -166,7 +166,9 @@ export QT_MESSAGE_PATTERN="$(echo -e '%{if-warning}\e[1;33m%{endif}%{if-fatal}\e
 #export QT_MESSAGE_PATTERN="$(echo -e '[%{time}] %{if-warning}\e[1;33m%{endif}%{if-fatal}\e[31m%{endif}%{if-critical}\e[31m%{endif}%{appname}(%{pid}) %{if-category}%{category}: %{endif}%{file}:%{line}(%{function}): \e[0m: %{message}\n\t%{backtrace depth=10 separator=\n\t}')"
 
 export QT_LOGGING_CONF="$HOME/.qt_logging_rules.conf"
-export QT_LOGGING_TO_CONSOLE=1
+#export QT_LOGGING_TO_CONSOLE=1
+export QT_ASSUME_STDERR_HAS_CONSOLE=1
+export QT_FORCE_STDERR_LOGGING=1
 
 export KDE_FORK_SLAVES=0
 
