@@ -1,0 +1,11 @@
+[user]
+	email = dvratil@kde.org
+	name = Daniel Vrátil
+
+[url "git://anongit.kde.org/"]
+    insteadOf = kde:
+[url "git@git.kde.org:"]
+    pushInsteadOf = kde:
+
+[init]
+    templatedir = ~/.git-templates
