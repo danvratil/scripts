@@ -34,14 +34,12 @@ except ValueError:
 
 # This is where you adjust the code to fit your needs
 name = None
-if 'kde.org' in origin.url or origin.url.startswith('kde:'):
+if 'kde.org' in origin.url or origin.url.startswith('kde:') or 'code.qt.io' in origin.url or 'codereview.qt-project.org' in origin.url:
+    name = 'Daniel Vrátil'
     email = 'dvratil@kde.org'
 elif 'fedoraproject.org' in origin.url:
     name = 'Daniel Vrátil'
     email = 'dvratil@fedoraproject.org'
-elif 'kdab.com' in origin.url or 'code.qt.io' in origin.url or 'codereview.qt-project.org' in origin.url:
-    name = 'Daniel Vrátil'
-    email = 'daniel.vratil@kdab.com'
 else:
     print('** Failed to detect identity! **')
     sys.exit(0)
