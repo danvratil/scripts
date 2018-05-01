@@ -136,9 +136,6 @@ fi
 if [[ $QT_PLUGIN_PATH != *"${_QT_PREFIX}/plugins:"* ]]; then
     export QT_PLUGIN_PATH=${_QT_PREFIX}/plugins:$QT_PLUGIN_PATH
 fi
-if [[ $QML2_IMPORT_PATH ]]; then
-    export QML2_IMPORT_PATH=/usr/lib64/qt5/qml
-fi
 if [[ $QML2_IMPORT_PATH != *"${_KDE_PREFIX}/lib64/qml:"* ]]; then
     export QML2_IMPORT_PATH=${_KDE_PREFIX}/lib64/qml:$QML2_IMPORT_PATH
 fi
