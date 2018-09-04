@@ -79,7 +79,6 @@ plugins=(
   python
   virtualenv
   ssh-agent
-  thefuck
   tmux
   web-search
   zsh_reload
