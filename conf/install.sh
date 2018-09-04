@@ -24,3 +24,9 @@ else
     mkdir -p ~/.vim/bundle
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
+
+if [ -d "/home/dvratil/.oh-my-zsh" ]; then
+    echo "Oh-my-zsh already exists"
+else
+    git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+fi
