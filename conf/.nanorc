@@ -1,6 +1,6 @@
 set autoindent
 set constantshow
-set cutfromcursor
+#set cutfromcursor
 set smarthome
 set smooth
 set tabstospaces
