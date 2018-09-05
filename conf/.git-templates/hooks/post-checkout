@@ -40,6 +40,9 @@ if 'kde.org' in origin.url or origin.url.startswith('kde:') or 'code.qt.io' in o
 elif 'fedoraproject.org' in origin.url:
     name = 'Daniel Vrátil'
     email = 'dvratil@fedoraproject.org'
+elif 'avast.com' in origin.url:
+    name = 'Daniel Vrátil'
+    email = 'daniel.vratil@avast.com'
 else:
     print('** Failed to detect identity! **')
     sys.exit(0)

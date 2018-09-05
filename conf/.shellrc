@@ -1,16 +1,24 @@
 # .shellrc
 
-export CC="colorcc"
-export CXX="colorc++"
-CCACHE_PREFIX="colorccache"
+if [[ -f /etc/fedora-release ]]; then
+    export CC=colorcc
+    export CXX=colorgcc
+    export CCACHE_PREFIX="colorccache"
+fi
+if [[ -f /etc/debian_version ]]; then
+    export RANLIB=/usr/bin/gcc-ranlib-7
+    export AR=/usr/bin/gcc-ar-7
+    export CC="/usr/lib/ccache/gcc-7"
+    export CXX="/usr/lib/ccache/g++-7"
+fi
+
 #export CFLAGS="-Qunused-arguments -fcolor-diagnostics"
 #export CXXFLAGS="-Qunused-arguments -fcolor-diagnostics"
 #export MAKEFLAGS="-j5"
-#export CCACHE_PREFIX=icecc
 #export ICECC_CC="/usr/bin/gcc"
 #export ICECC_CXX="/usr/bin/g++"
 
-export ACK_OPTIONS="--ignore-dir=build"
+export ACK_OPTIONS="--ignore-dir=build --ignore-dir=build-debug --ignore-dir=build-release"
 
 alias 'ls'='ls --color'
 alias 'll'='ls -l'
@@ -20,11 +28,18 @@ alias 'grep'='grep --colour=always'
 #alias 'pacman'='sudo pacman-color'
 #alias 'du'='cdu -idh'
 alias 'valhalla'='ssh dvratil@83.167.228.39'
-alias 'wine32'='WINEARCH=win32 WINEPREFIX=$HOME/Games/wine/wine32 wine'
+if [[ -f /etc/fedora-release ]]; then
+    alias 'wine32'='WINEARCH=win32 WINEPREFIX=$HOME/Games/wine/wine32 wine'
+fi
+if [[ -f /etc/debian_version ]]; then
+    alias 'wine32'='WINEARCH=win32 WINEPREFIX=$HOME/.wine/wine32 wine'
+fi
 alias 'winesteam'='WINEARCH=win32 WINEPREFIX=$HOME/Games/wine/steam wine $HOME/Games/wine/steam/drive_c/Program\ Files/Steam/steam.exe -no-dwrite'
 alias 'winegames'='WINEARCH=win32 WINEPREFIX=$HOME/Games/wine/games wine'
 alias 'aterm'='/usr/bin/aterm -name aterm -sl 3000 -tr -si -sk -sh 20 -fn -misc-fixed-medium-r-normal-*-*-120-*-*-c-*-iso8859-2'
 alias 'cmake-overlay'='cmake .. -DCMAKE_INSTALL_PREFIX=/data/install/kde -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64'
+alias 'cmake-kde'='cmake -DCMAKE_INSTALL_PREFIX=/data/install/kde -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64'
+alias 'cmake-avast'='cmake -DCMAKE_INSTALL_PREFIX=/data/install/avast -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64'
 alias 'smi'='sudo make -j5 install'
 alias 'kdesrc-build'='/data/KDE/src/kdesrc-build/kdesrc-build'
 alias 'yum'='dnf'
@@ -34,7 +49,13 @@ alias 'kdab'='cd /data/KDAB'
 alias 'pastekde'='pastebinit -b paste.kde.org'
 alias 'qttest'='./target_wrapper.sh'
 alias 'venv'='source ./venv/bin/activate'
-alias 'arc'='/data/random/arcanist/bin/arc'
+if [[ -f /etc/fedora-release ]]; then
+    alias 'arc'='/data/random/arcanist/bin/arc'
+fi
+alias 'pim-docker'='/data/KDE/src/scratch/dvratil/kdepim-docker/run.sh /data/KDE'
+
+# Avast
+alias 'supe'='su --preserve-environment'
 
 # Czechitas
 alias 'czechitas'='cd /home/dvratil/Documents/Work/Czechitas'
@@ -73,7 +94,9 @@ fi
 
 _QT_PREFIX="/data/install/qt${_QT_VERSION}"
 _KDE_PREFIX="/data/install/kde"
-
+if [[ -f /etc/debian_version ]]; then
+    _AVAST_PREFIX="/data/install/avast"
+fi
 
 if [[ $LD_LIBRARY_PATH != *"${_KDE_PREFIX}/lib64:"* ]]; then
     export LD_LIBRARY_PATH=${_KDE_PREFIX}/lib64:/usr/local/lib64:$LD_LIBRARY_PATH
@@ -81,63 +104,125 @@ fi
 if [[ $LD_LIBRARY_PATH != *"${_KDE_PREFIX}/lib:"* ]]; then
     export LD_LIBRARY_PATH=${_KDE_PREFIX}/lib:$LD_LIBRARY_PATH
 fi
+if [[ -f /etc/debian_version ]] && [[ $LD_LIBRARY_PATH != *"${_KDE_PREFIX}/lib/x86_64-linux-gnu:"* ]]; then
+    export LD_LIBRARY_PATH=${_KDE_PREFIX}/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+fi
+
+if [[ $LD_LIBRARY_PATH != *"${_QT_PREFIX}/lib64:"* ]]; then
+    export LD_LIBRARY_PATH=${_QT_PREFIX}/lib64:$LD_LIBRARY_PATH
+fi
 if [[ $LD_LIBRARY_PATH != *"${_QT_PREFIX}/lib:"* ]]; then
     export LD_LIBRARY_PATH=${_QT_PREFIX}/lib:$LD_LIBRARY_PATH
 fi
+if [[ -f /etc/debian_version ]] && [[ $LD_LIBRARY_PATH != *"${_QT_PREFIX}/lib/x86_64-linux-gnu:"* ]]; then
+    export LD_LIBRARY_PATH=${_QT_PREFIX}/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+fi
+
+if [[ ! -z "${_AVAST_PREFIX}" ]]; then
+    if [[ $LD_LIBRARY_PATH != *"${_AVAST_PREFIX}/lib:"* ]]; then
+        export LD_LIBRARY_PATH=${_AVAST_PREFIX}/lib:$LD_LIBRARY_PATH
+    fi
+    if [[ $LD_LIBRARY_PATH != *"${_AVAST_PREFIX}/lib/x86_64-linux-gnu:"* ]]; then
+        export LD_LIBRARY_PATH=${_AVAST_PREFIX}/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+    fi
+fi
+
+
 if [[ $XDG_DATA_DIRS != *"${_KDE_PREFIX}/share:"* ]]; then
     export XDG_DATA_DIRS=${_KDE_PREFIX}/share:${_KDE_PREFIX}/share/kde4:/usr/share/kde4:$XDG_DATA_DIRS:/usr/share
 fi
 if [[ $XDG_DATA_DIRS != *"${_QT_PREFIX}/share:"* ]]; then
     export XDG_DATA_DIRS=${_QT_PREFIX}/share:$XDG_DATA_DIRS
 fi
+if [[ ! -z "${_AVAST_PREFIX}" ]] && [[ $XDG_DATA_DIRS != *"${_AVAST_PREFIX}/share:"* ]]; then
+    export XDG_DATA_DIRS=${_AVAST_PREFIX}/share:$XDG_DATA_DIRS
+fi
+
 if [[ $XDG_CONFIG_DIRS != *"${_KDE_PREFIX}/etc/xdg"* ]]; then
     export XDG_CONFIG_DIRS="${_KDE_PREFIX}/etc/xdg:${XDG_CONFIG_DIRS}:/etc/xdg"
 fi
-#if [[ $XDG_DATA_DIRS != *"/opt/sandbox-devel/share:"* ]]; then
-#    export XDG_DATA_DIRS=/opt/sandbox-devel/share:$XDG_DATA_DIRS
-#fi
+if [[ $XDG_CONFIG_DIRS != *"${_QT_PREFIX}/etc/xdg"* ]]; then
+    export XDG_CONFIG_DIRS=${_QT_PREFIX}/etc/xdg:$XDG_CONFIG_DIRS
+fi
+if [[ ! -z "${_AVAST_PREFIX}" ]] && [[ $XDG_CONFIG_DIRS != *"${_AVAST_PREFIX}/etc/xdg:"* ]]; then
+    export XDG_CONFIG_DIRS=${_AVAST_PREFIX}/etc/xdg:$XDG_CONFIG_DIRS
+fi
+
 if [[ $PATH != *"${_KDE_PREFIX}/bin:"* ]]; then
     export PATH=${_KDE_PREFIX}/bin:${_KDE_PREFIX}/libexec/kde4:$PATH
 fi
-if [[ $PATH != *"${_QT_PREFIX}/bin:"* ]]; then
+if [[ $PATH != "*${_QT_PREFIX}/bin:"* ]]; then
     export PATH=${_QT_PREFIX}/bin:$PATH
 fi
-#if [[ $PATH != *"/opt/sandbox-devel/bin:"* ]]; then
-#    export PATH=/opt/sandbox-devel/bin:$PATH
-#fi
-if [[ $PATH != *"/data/KDAB/kdab-utils/Scripts:"* ]]; then
-    export PATH=/data/KDAB/kdab-utils/Scripts:$PATH
+if [[ ! -z "${_AVAST_PREFIX}" ]] && [[ $PATH != *"${_AVAST_PREFIX}/bin:"* ]]; then
+    export PATH=${_AVAST_PREFIX}/bin:$PATH
 fi
+
 if [[ $KDEDIRS != *"${_KDE_PREFIX}:"* ]]; then
     export KDEDIRS=${_KDE_PREFIX}:$KDEDIRS
 fi
+
 if [[ $PKG_CONFIG_PATH != *"${_KDE_PREFIX}/lib64/pkgconfig:"* ]]; then
     export PKG_CONFIG_PATH=${_KDE_PREFIX}/lib64/pkgconfig:/usr/lib64/pkgconfig:$PKG_CONFIG_PATH
 fi
 if [[ $PKG_CONFIG_PATH != *"${_KDE_PREFIX}/lib/pkgconfig:"* ]]; then
     export PKG_CONFIG_PATH=${_KDE_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH
 fi
+if [[ -f /etc/debian_version ]] && [[ $PKG_CONFIG_PATH != *"${_KDE_PREFIX}/lib/x86_64-linux-gnu/pkgconfig:"* ]]; then
+    export PKG_CONFIG_PATH=${_KDE_PREFIX}/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+fi
+
+if [[ $PKG_CONFIG_PATH != *"${_QT_PREFIX}/lib64/pkgconfig:"* ]]; then
+    export PKG_CONFIG_PATH=${_QT_PREFIX}/lib64/pkgconfig:$PKG_CONFIG_PATH
+fi
 if [[ $PKG_CONFIG_PATH != *"${_QT_PREFIX}/lib/pkgconfig:"* ]]; then
     export PKG_CONFIG_PATH=${_QT_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH
 fi
+if [[ -f /etc/debian_version ]] && [[ $PKG_CONFIG_PATH != *"${_QT_PREFIX}/lib/x86_64-linux-gnu/pkgconfig:"* ]]; then
+    export PKG_CONFIG_PATH=${_QT_PREFIX}/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+fi
+
+if [[ ! -z "${_AVAST_PREFIX}" ]]; then
+    if [[ $PKG_CONFIG_PATH != *"${_AVAST_PREFIX}/lib/pkgconfig:"* ]]; then
+        export PKG_CONFIG_PATH=${_AVAST_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH
+    fi
+    if [[ $PKG_CONFIG_PATH != *"${_AVAST_PREFIX}/lib/x86_64-linux-gnu/pkgconfig:"* ]]; then
+        export PKG_CONFIG_PATH=${_AVAST_PREFIX}/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+    fi
+fi
+
 if [[ $QT_PLUGIN_PATH != *"${_KDE_PREFIX}/lib64/plugins:"* ]]; then
     export QT_PLUGIN_PATH=${_KDE_PREFIX}/lib64/plugins:${_KDE_PREFIX}/lib64/kde4/plugins:${_KDE_PREFIX}/lib64/qt5/plugins:$QT_PLUGIN_PATH
+fi
+if [[ -f /etc/debian_version ]] && [[ $QT_PLUGIN_PATH != *"${_KDE_PREFIX}/lib/x86_64-linux-gnu/plugins:"* ]]; then
+    export QT_PLUGIN_PATH=${_KDE_PREFIX}/lib/x86_64-linux-gnu/plugins:$QT_PLUGIN_PATH
 fi
 if [[ $QT_PLUGIN_PATH != *"${_QT_PREFIX}/plugins:"* ]]; then
     export QT_PLUGIN_PATH=${_QT_PREFIX}/plugins:$QT_PLUGIN_PATH
 fi
+
 if [[ $QML2_IMPORT_PATH != *"${_KDE_PREFIX}/lib64/qml:"* ]]; then
     export QML2_IMPORT_PATH=${_KDE_PREFIX}/lib64/qml:$QML2_IMPORT_PATH
+fi
+if [[ -f /etc/debian_version ]] && [[ $QML2_IMPORT_PATH != *"${_KDE_PREFIX}/lib/x86_64-linux-gnu/qml:"* ]]; then
+    export QML2_IMPORT_PATH=${_KDE_PREFIX}/lib/x86_64-linux-gnu/qml:$QML2_IMPORT_PATH
 fi
 if [[ $QML2_IMPORT_PATH != "*${_QT_PREFIX}/qml:"* ]]; then
     export QML2_IMPORT_PATH=${_QT_PREFIX}/qml:$QML2_IMPORT_PATH
 fi
 
-export SASL_PATH="${_KDE_PREFIX}/lib64/sasl2:${SASL_PATH:-/usr/lib64/sasl2}"
+if [[ -f /etc/fedora-release ]]; then
+    export SASL_PATH=${_KDE_PREFIX}/lib64/sasl2:${SASL_PATH:-/usr/lib64/sasl2}
+fi
+if [[ -f /etc/debian_version ]]; then
+    export SASL_PATH=/usr/lib/x86_64-linux-gnu/sasl2
+fi
+
+export MANPATH=/data/install/kde/share/man:/usr/local/share/man:/usr/share/man
 
 #export XCURSOR_PATH=${_KDE_PREFIX}/share/icons
 
-export EDITOR=/usr/bin/nano
+export EDITOR=vim
 
 #export QT_STYLE_OVERRIDE=breeze
 #export QT_QUICK_CONTROLS_STYLE=Breeze
@@ -167,6 +252,24 @@ export SSH_ASKPASS=`which ksshaskpass`
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 
+# Colorful less
+_default=$(tput sgr0)
+_red=$(tput setaf 1)
+_green=$(tput setaf 2)
+_purple=$(tput setaf 5)
+_orange=$(tput setaf 9)
+export PAGER=less
+export LESS_TERMCAP_mb=$_red
+export LESS_TERMCAP_md=$_orange
+export LESS_TERMCAP_me=$_default
+export LESS_TERMCAP_se=$_defautt
+export LESS_TERMCAP_so=$_purple
+export LESS_TERMCAP_ue=$_default
+export LESS_TERMCAP_us=$_green
+
+
+# .cht.sh
+. ~/.bash.d/cht.sh
 
 # Start tmux when running interactively
 #[[ $- != *i* ]] && return

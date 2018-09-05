@@ -1,6 +1,10 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+autoload bashcompinit
+bashcompinit
+
+
 # Path to your oh-my-zsh installation.
 export ZSH=/home/dvratil/.oh-my-zsh
 
@@ -70,6 +74,7 @@ plugins=(
   cp
   dirhistory
   dirpersist
+  docker
   dnf
   git
   gpg-agent
@@ -79,7 +84,9 @@ plugins=(
   python
   virtualenv
   ssh-agent
+  taskwarrior
   tmux
+  ubuntu
   web-search
   zsh_reload
 )
@@ -88,7 +95,12 @@ source $ZSH/oh-my-zsh.sh
 
 
 # User configuration
-. /usr/share/powerline/zsh/powerline.zsh
+if [ -f /etc/debian_version ]; then
+    . /usr/share/powerline/bindings/zsh/powerline.zsh
+fi
+if [ -f /etc/fedora-release ]; then
+    . /usr/share/powerline/zsh/powerline.zsh
+fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
