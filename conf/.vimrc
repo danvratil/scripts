@@ -10,17 +10,25 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sensitive'
 
 Plugin 'ctrlpvim/ctrlp.vim'
 
 Plugin 'scrooloose/nerdTree'
+Plugin 'jistr/vim-nerdtree-tabs'
+
 Plugin 'scrooloose/syntastic'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'rdnetto/YCM-generator'
 
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 Plugin 'majutsushi/tagbar'
+Plugin 'universal-ctags/ctags'
+
+Plugin 'jewes/Conque-Shell'
 
 call vundle#end()            " required
 
@@ -39,8 +47,9 @@ filetype plugin on
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-
 " General
+set encoding=utf-8
+set clipboard=unnamed	" system clipboard
 set number		" show line numbers
 set ruler
 set wrap		" enable wrapping
@@ -68,9 +77,29 @@ set history=50		" keep history of 50 commands
 set tags=./.tags;/	" will look for .tags file in cwd and all the way up to root
 set cscopetag
 
+" Coding style for C++
+au BufRead,BufNewFile *.c,*.cpp,*.cxx,*.h,*.hpp
+	\ set tabstop=4 |
+	\ set softtabstop=4 |
+	\ set shiftwidth=4 |
+	\ set textwidth=79 |
+	\ set expandtab |
+	\ set autoindent |
+	\ set fileformat=unix
 
 " CtrlP
 nnoremap <leader>. :CtrlPTag<cr>
+nnoremap <silent> <Leader>b :TagbarToggle<CR>
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = {
+	\ 'dir': '\v[\/]\.(git|hg|svn)$|build'
+	\ }
+
+" Highlighting
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_template_highlight = 1
 
 " Tagbar
 nmap <silent> <F3> :TagbarToggle<CR>
@@ -86,7 +115,7 @@ let g:tagbar_sort = 0
 let g:syntastic_cpp_compiler_options = "-std=c++17"
 
 " NerdTree
-:nmap \e :NERDTreeToggle<CR>
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
 " Moving
 " move to beginning/end of line
@@ -119,4 +148,7 @@ nnoremap <F10> :YcmCompleter GetTypeImprecise<CR>
 nnoremap <F9> :YcmCompleter GetDocImprecise<CR>
 "nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 
+" Highlight trailing whitespaces
+set listchars=tab:▸\ ,trail:·
+set list
 
