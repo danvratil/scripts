@@ -246,6 +246,12 @@ export QT_LOGGING_CONF="$HOME/.qt_logging_rules.conf"
 export QT_ASSUME_STDERR_HAS_CONSOLE=1
 export QT_FORCE_STDERR_LOGGING=1
 
+if [[ "$(hostname)" = "Mjollnir" ]]; then
+    export QT_AUTO_SCREEN_SCALE_FACTOR=0
+    export QT_SCALE_FACTOR=1
+    export QT_SCREEN_SCALE_FACTORS="DP-0=1;DVI-D-0=1"
+fi
+
 export KDE_FORK_SLAVES=0
 
 export XDG_RUNTIME_DIR=/var/run/user/1000
