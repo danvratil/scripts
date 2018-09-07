@@ -29,13 +29,14 @@ alias 'grep'='grep --colour=always'
 #alias 'du'='cdu -idh'
 alias 'valhalla'='ssh dvratil@83.167.228.39'
 if [[ -f /etc/fedora-release ]]; then
-    alias 'wine32'='WINEARCH=win32 WINEPREFIX=$HOME/Games/wine/wine32 wine'
+    alias 'wine32'='WINEARCH=win32 WINEPREFIX=/data/Games/wine/wine32 wine'
+    alias 'winesteam'='WINEARCH=win32 WINEPREFIX=/data/Games/wine/steam wine $HOME/Games/wine/steam/drive_c/Program\ Files/Steam/steam.exe -no-dwrite'
+    alias 'winegames'='WINEARCH=win32 WINEPREFIX=/data/Games/wine/games wine'
 fi
 if [[ -f /etc/debian_version ]]; then
     alias 'wine32'='WINEARCH=win32 WINEPREFIX=$HOME/.wine/wine32 wine'
+
 fi
-alias 'winesteam'='WINEARCH=win32 WINEPREFIX=$HOME/Games/wine/steam wine $HOME/Games/wine/steam/drive_c/Program\ Files/Steam/steam.exe -no-dwrite'
-alias 'winegames'='WINEARCH=win32 WINEPREFIX=$HOME/Games/wine/games wine'
 alias 'aterm'='/usr/bin/aterm -name aterm -sl 3000 -tr -si -sk -sh 20 -fn -misc-fixed-medium-r-normal-*-*-120-*-*-c-*-iso8859-2'
 alias 'cmake-overlay'='cmake .. -DCMAKE_INSTALL_PREFIX=/data/install/kde -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 alias 'cmake-kde'='cmake -DCMAKE_INSTALL_PREFIX=/data/install/kde -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
