@@ -13,7 +13,11 @@ import ConfigParser
 import os
 import sys
 
-repo = git.Repo(os.getcwd())
+try:
+    repo = git.Repo(os.getcwd())
+except git.InvalidGitRepositoryError:
+    print('** Failed to access the repo **')
+    sys.exit(0)
 
 # Don't do anything if an identity is already configured in this
 # repo's .git/config
