@@ -276,7 +276,9 @@ export LESS_TERMCAP_us=$_green
 
 
 # .cht.sh
-. ~/.bash.d/cht.sh
+if [ -f ~/.bash.d/cht.sh ]; then
+    . ~/.bash.d/cht.sh
+fi
 
 # Start tmux when running interactively
 #[[ $- != *i* ]] && return
