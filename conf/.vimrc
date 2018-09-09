@@ -10,7 +10,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sensitive'
+Plugin 'tpope/vim-sensible'
 
 Plugin 'ctrlpvim/ctrlp.vim'
 
