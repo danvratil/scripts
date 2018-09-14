@@ -257,7 +257,6 @@ export KDE_FORK_SLAVES=0
 
 export XDG_RUNTIME_DIR=/var/run/user/1000
 export SSH_ASKPASS=`which ksshaskpass`
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 
 # Colorful less

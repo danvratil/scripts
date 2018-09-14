@@ -91,6 +91,12 @@ plugins=(
   zsh_reload
 )
 
+
+# Setup stuff for ssh-agent
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities is_rsa id_rsa.avast id_rsa.fedoraproject id_rsa.redhat id_rsa.qt
+zstyle :omz:plugins:ssh-agent lifetime 4h
+
 source $ZSH/oh-my-zsh.sh
 
 
