@@ -27,6 +27,7 @@ Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 Plugin 'majutsushi/tagbar'
 Plugin 'universal-ctags/ctags'
+Plugin 'craigemery/vim-autotag'
 
 Plugin 'jewes/Conque-Shell'
 
@@ -74,8 +75,13 @@ set wildignore+=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,*.pyc,.svn,*/cm/log/**,t
 set confirm		" confirm :q, :w or :wq
 set history=50		" keep history of 50 commands
 
+" Ctags
 set tags=./.tags;/	" will look for .tags file in cwd and all the way up to root
 set cscopetag
+
+" autotags
+let g:autotagTagsFile=".tags"
+
 
 " Coding style for C++
 au BufRead,BufNewFile *.c,*.cpp,*.cxx,*.h,*.hpp
@@ -124,6 +130,7 @@ nmap <End> $
 
 " Advanced
 set backspace=indent,eol,start  "Backspace behaviour
+map <F7> mzgg=G`z               "F7 to reindent entire document
 
 " YCM
 " http://stackoverflow.com/questions/3105307/how-do-you-automatically-remove-the-preview-window-after-autocompletion-in-vim
