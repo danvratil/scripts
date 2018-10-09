@@ -124,6 +124,8 @@ export EDITOR=nano
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+# 10ms for key sequences (makes switching to normal mode in Vim faster)
+KEYTIMEOUT=1
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
