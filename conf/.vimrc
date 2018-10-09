@@ -159,3 +159,6 @@ nnoremap <F9> :YcmCompleter GetDocImprecise<CR>
 set listchars=tab:▸\ ,trail:·
 set list
 
+" Case insensitive search, highlight results
+set ignorecase
+set hlsearch
