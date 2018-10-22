@@ -68,21 +68,24 @@ def get_compilation_info_for_file(dbpath, database, filename):
     return database.GetCompilationInfoForFile(filename)
 
 def find_nearest(path, target):
-    if path.startswith('/data/KDE/src/'):
+    if path.startswith('/data/KDE/src/') and not path.startswith('/data/KDE/src/scratch'):
         path = path.replace('/data/KDE/src/', '/data/KDE/build/')
     candidate = os.path.join(path, target)
-    build_candidate = os.path.join(path, 'build', target)
-    if os.path.isfile(candidate) or os.path.isdir(candidate):
-        logging.info("Found nearest " + target + " at " + candidate)
-        return candidate
-    elif os.path.isfile(build_candidate) or os.path.isdir(build_candidate):
-        logging.info("Found nearest " + target + " at " + build_candidate)
-        return build_candidate
-    else:
-        parent = os.path.dirname(os.path.abspath(path))
-        if(parent == path):
-            raise RuntimeError("Could not find " + target)
-        return find_nearest(parent, target)
+    for build_dir in ['build-x86_64', 'build']:
+        build_candidate = os.path.join(path, build_dir, target)
+        logging.info("Build candidate: " + build_candidate)
+        if os.path.isfile(candidate) or os.path.isdir(candidate):
+            logging.info("Found nearest " + target + " at " + candidate)
+            return candidate
+        elif os.path.isfile(build_candidate) or os.path.isdir(build_candidate):
+            logging.info("Found nearest " + target + " at " + build_candidate)
+            return build_candidate
+
+    parent = os.path.dirname(os.path.abspath(path))
+    if(parent == path):
+        raise RuntimeError("Could not find " + target)
+    return find_nearest(parent, target)
+
 
 def make_relative_paths_in_flags_absolute(flags, working_directory):
     if not working_directory:
