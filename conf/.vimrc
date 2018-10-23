@@ -17,7 +17,8 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdTree'
 Plugin 'jistr/vim-nerdtree-tabs'
 
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
+"Plugin 'w0rp/ale'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 
 Plugin 'Valloric/YouCompleteMe'
@@ -30,6 +31,8 @@ Plugin 'universal-ctags/ctags'
 Plugin 'craigemery/vim-autotag'
 
 Plugin 'jewes/Conque-Shell'
+
+Plugin 'christophermca/meta5'
 
 call vundle#end()            " required
 
@@ -47,6 +50,10 @@ filetype plugin on
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+"
+
+" Use fancy colorscheme
+colorscheme meta5
 
 " General
 set encoding=utf-8
@@ -162,3 +169,4 @@ set list
 " Case insensitive search, highlight results
 set ignorecase
 set hlsearch
+
