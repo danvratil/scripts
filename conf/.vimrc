@@ -65,6 +65,7 @@ set linebreak		" break lines at words
 set nolist		" list disables nobreak
 set scrolloff=5		" 2 lines above/below cursor when scrolling
 set laststatus=2        " always display statusbar
+set showcmd             " show commadn as it's being entered
 
 set textwidth=0
 set wrapmargin=0	" disable line wrap
