@@ -39,7 +39,7 @@ if [[ -f /etc/debian_version ]]; then
 fi
 alias 'aterm'='/usr/bin/aterm -name aterm -sl 3000 -tr -si -sk -sh 20 -fn -misc-fixed-medium-r-normal-*-*-120-*-*-c-*-iso8859-2'
 alias 'cmake-overlay'='cmake .. -DCMAKE_INSTALL_PREFIX=/data/install/kde -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
-alias 'cmake-kde'='cmake -DCMAKE_INSTALL_PREFIX=/data/install/kde -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
+alias 'cmake-kde'='cmake -DCMAKE_INSTALL_PREFIX=/data/install/kde -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_EXE_LINKER_FLAGS="-lstdc++" -DCMAKE_MODULE_LINKER_FLAGS="-lstdc++" -DCMAKE_SHARED_LINKER_FLAGS="-lstdc++"'
 alias 'cmake-avast'='cmake -DCMAKE_INSTALL_PREFIX=/data/install/avast -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 alias 'smi'='sudo make -j5 install'
 alias 'kdesrc-build'='/data/KDE/src/kdesrc-build/kdesrc-build'
