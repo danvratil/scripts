@@ -34,6 +34,8 @@ Plugin 'jewes/Conque-Shell'
 
 Plugin 'christophermca/meta5'
 
+Plugin 'peterhoeg/vim-qml'
+
 call vundle#end()            " required
 
 filetype plugin indent on    " required
