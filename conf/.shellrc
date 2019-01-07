@@ -68,6 +68,11 @@ alias 'czechitas'='cd /home/dvratil/Documents/Work/Czechitas'
 
 alias 'configure-qt5'='../configure -prefix /data/install/qt5 -nomake examples -developer-build -debug -confirm-license -opensource -system-xkbcommon -system-harfbuzz -journald -system-sqlite --cups --ccache'
 
+# Source avast-specific aliases that can't go to public git
+if [[ -f $HOME/.avastshellrc ]]; then
+    . $HOME/.avastshellrc
+fi
+
 
 # User specific aliases and functions
 
