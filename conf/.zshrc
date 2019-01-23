@@ -93,7 +93,11 @@ plugins=(
 
 # Setup stuff for ssh-agent
 zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa.avast id_rsa.fedoraproject id_rsa.redhat id_rsa.qt
+if [ $(hostname) = "Brokkr" ]; then
+    zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa.avast id_rsa.fedoraproject id_rsa.redhat id_rsa.qt
+else
+    zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa.fedoraproject id_rsa.redhat id_rsa.qt
+fi
 zstyle :omz:plugins:ssh-agent lifetime 4h
 
 source $ZSH/oh-my-zsh.sh
