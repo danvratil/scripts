@@ -86,7 +86,6 @@ plugins=(
   ssh-agent
   taskwarrior
   tmux
-  ubuntu
   web-search
   zsh_reload
 )
@@ -101,12 +100,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 # User configuration
-if [ -f /etc/debian_version ]; then
-    . /usr/share/powerline/bindings/zsh/powerline.zsh
-fi
-if [ -f /etc/fedora-release ]; then
-    . /usr/share/powerline/zsh/powerline.zsh
-fi
+. /usr/share/powerline/zsh/powerline.zsh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
