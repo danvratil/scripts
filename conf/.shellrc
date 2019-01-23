@@ -145,6 +145,9 @@ fi
 if [[ ! -z "${_AVAST_PREFIX}" ]] && [[ $XDG_DATA_DIRS != *"${_AVAST_PREFIX}/share:"* ]]; then
     export XDG_DATA_DIRS=${_AVAST_PREFIX}/share:$XDG_DATA_DIRS
 fi
+if [[ $XDG_DATA_DIRS != *"$HOME/.local/share/flatpak/exports/share"* ]]; then
+    export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS
+fi
 
 if [[ $XDG_CONFIG_DIRS != *"${_KDE_PREFIX}/etc/xdg"* ]]; then
     export XDG_CONFIG_DIRS="${_KDE_PREFIX}/etc/xdg:${XDG_CONFIG_DIRS}:/etc/xdg"
