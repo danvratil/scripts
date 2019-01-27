@@ -152,6 +152,9 @@ fi
 if [[ ! -z "${_AVAST_PREFIX}" ]] && [[ $PATH != *"${_AVAST_PREFIX}/bin:"* ]]; then
     export PATH=${_AVAST_PREFIX}/bin:$PATH
 fi
+if [[ $PATH != *"$HOME/.local/share/flatpak/exports/bin"* ]]; then
+    export PATH=$HOME/.local/share/flatpak/exports/bin:$PATH
+fi
 
 if [[ $KDEDIRS != *"${_KDE_PREFIX}:"* ]]; then
     export KDEDIRS=${_KDE_PREFIX}:$KDEDIRS
