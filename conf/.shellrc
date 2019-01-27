@@ -233,7 +233,7 @@ fi
 
 export KDE_FORK_SLAVES=0
 
-export XDG_RUNTIME_DIR=/var/run/user/1000
+#export XDG_RUNTIME_DIR=/var/run/user/1000
 export SSH_ASKPASS=`which ksshaskpass`
 
 
