@@ -33,6 +33,8 @@ Plugin 'craigemery/vim-autotag'
 Plugin 'jewes/Conque-Shell'
 
 Plugin 'christophermca/meta5'
+Plugin 'sts10/vim-pink-moon'
+Plugin 'joshdick/onedark.vim'
 
 Plugin 'peterhoeg/vim-qml'
 
@@ -55,7 +57,9 @@ filetype plugin on
 "
 
 " Use fancy colorscheme
-colorscheme meta5
+"colorscheme meta5
+"colorscheme pink-moon
+colorscheme onedark
 
 " General
 set encoding=utf-8
