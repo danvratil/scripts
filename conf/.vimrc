@@ -85,6 +85,10 @@ set wildignore+=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,*.pyc,.svn,*/cm/log/**,t
 set confirm		" confirm :q, :w or :wq
 set history=50		" keep history of 50 commands
 
+"This unsets the "last search pattern" register by hitting return
+nnoremap <CR> :noh<CR><CR>
+
+
 " Ctags
 set tags=./.tags;/	" will look for .tags file in cwd and all the way up to root
 set cscopetag
