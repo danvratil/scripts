@@ -154,7 +154,7 @@ map <F7> mzgg=G`z               "F7 to reindent entire document
 " http://stackoverflow.com/questions/3105307/how-do-you-automatically-remove-the-preview-window-after-autocompletion-in-vim
 " :h ins-completion.
 " :YcmDiags - errors
-let g:ycm_confirm_extra_conf = 0
+let g:ycm_confirm_extra_conf = 1
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_error_symbol = '%'
 let g:ycm_warning_symbol = '%'
