@@ -1,8 +1,9 @@
 # .shellrc
 
 if [[ -f /etc/fedora-release ]]; then
-    export CC="/usr/lib64/ccache/gcc"
-    export CXX="/usr/lib64/ccache/g++"
+    export CC="/usr/lib64/ccache/clang"
+    export CXX="/usr/lib64/ccache/clang++"
+    export LDFLAGS="-fuse-ld=lld"
     #export CCACHE_PREFIX="colorccache"
 fi
 
