@@ -136,7 +136,37 @@ KEYTIMEOUT=1
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+
 
 setopt nosharehistory
+
+# https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
+__fzf_use_tmux__() {
+  [ -n "$TMUX_PANE" ] && [ "${FZF_TMUX:-0}" != 0 ] && [ ${LINES:-40} -gt 15 ]
+}
+
+__fzfcmd() {
+  __fzf_use_tmux__ &&
+  echo "fzf-tmux -d${FZF_TMUX_HEIGHT:-40%}" || echo "fzf"
+}
+
+fzf-history-widget() {
+    local selected num
+    setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
+    selected=( $(fc -rl 1 |
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
+    local ret=$?
+    if [ -n "$selected" ]; then
+        num=$selected[1]
+        if [ -n "$num" ]; then
+            zle vi-fetch-history -n $num
+        fi
+    fi
+    zle reset-prompt
+    return $ret
+}
+zle     -N   fzf-history-widget
+bindkey '^R' fzf-history-widget
 
 source ~/.shellrc
