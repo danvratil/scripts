@@ -229,3 +229,5 @@ vmap <C-ScrollWheelLeft> <nop>
 vmap <ScrollWheelRight> <nop>
 vmap <S-ScrollWheelRight> <nop>
 vmap <C-ScrollWheelRight> <nop>
+
+let g:ycm_rust_src_path = '/usr/lib/rustlib/src/rust/src'
