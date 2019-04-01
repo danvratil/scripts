@@ -88,6 +88,9 @@ plugins=(
   tmux
   web-search
   zsh_reload
+  zsh-autosuggestions
+  # Must the last one
+  zsh-syntax-highlighting
 )
 
 
