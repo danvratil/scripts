@@ -1,9 +1,6 @@
 [user]
 	email = dvratil@kde.org
 	name = Daniel Vrátil
-
-[url "git://anongit.kde.org/"]
-	insteadOf = kde:
 [url "git@git.kde.org:"]
 	pushInsteadOf = kde:
 [url "https://github.com/"]
@@ -20,3 +17,13 @@
 	required = true
 [pull]
 	rebase = true
+[url "https://anongit.kde.org/"]
+    insteadOf = kde:
+
+[url "git@git.int.avast.com:"]
+        insteadOf = avast:
+        pushInsteadOf = avast:
+[mergetool]
+	prompt = true
+[mergetool "kdiff3"]
+	cmd = kdiff3 $BASE $LOCAL $REMOTE -o $MERGED
