@@ -28,7 +28,9 @@ Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 Plugin 'majutsushi/tagbar'
 Plugin 'universal-ctags/ctags'
-Plugin 'craigemery/vim-autotag'
+"Plugin 'craigemery/vim-autotag'
+Plugin 'xolox/vim-misc'  " needed by easytags
+Plugin 'xolox/vim-easytags'
 
 Plugin 'jewes/Conque-Shell'
 
@@ -96,9 +98,13 @@ nnoremap <CR> :noh<CR><CR>
 " Ctags
 set tags=./.tags;/	" will look for .tags file in cwd and all the way up to root
 set cscopetag
+nnoremap <leader>. :CtrlPTag<cr>
 
 " autotags
-let g:autotagTagsFile=".tags"
+"let g:autotagTagsFile=".tags"
+let g:easytags_async = 1
+let g:easytags_always_enabled = 1
+let g:easytags_auto_highlight = 0
 
 
 " Coding style for C++
@@ -106,7 +112,7 @@ au BufRead,BufNewFile *.c,*.cpp,*.cxx,*.h,*.hpp
 	\ set tabstop=4 |
 	\ set softtabstop=4 |
 	\ set shiftwidth=4 |
-	\ set textwidth=79 |
+	\ set textwidth=100 |
 	\ set expandtab |
 	\ set autoindent |
 	\ set fileformat=unix
