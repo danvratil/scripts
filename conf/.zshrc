@@ -8,6 +8,7 @@ bashcompinit
 # Path to your oh-my-zsh installation.
 export ZSH=/home/dvratil/.oh-my-zsh
 
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -114,16 +115,11 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-export EDITOR=nano
-
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# VI mode in ZSH
+bindkey -v
 
 # 10ms for key sequences (makes switching to normal mode in Vim faster)
 KEYTIMEOUT=1
