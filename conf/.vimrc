@@ -40,6 +40,8 @@ Plugin 'joshdick/onedark.vim'
 
 Plugin 'peterhoeg/vim-qml'
 
+Plugin 'ntpeters/vim-better-whitespace'
+
 call vundle#end()            " required
 
 filetype plugin indent on    " required
