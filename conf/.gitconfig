@@ -24,6 +24,7 @@
         insteadOf = avast:
         pushInsteadOf = avast:
 [mergetool]
-	prompt = true
-[mergetool "kdiff3"]
-	cmd = kdiff3 $BASE $LOCAL $REMOTE -o $MERGED
+        prompt = false
+
+[merge]
+	tool = vimdiff
