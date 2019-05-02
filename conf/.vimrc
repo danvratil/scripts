@@ -65,6 +65,9 @@ filetype plugin on
 "colorscheme pink-moon
 colorscheme onedark
 
+" Transparent background
+hi Normal guibg=NONE ctermbg=NONE
+
 " General
 set encoding=utf-8
 set clipboard=unnamed	" system clipboard
