@@ -103,7 +103,7 @@ nnoremap <CR> :noh<CR><CR>
 
 
 " Ctags
-set tags=./.tags;/	" will look for .tags file in cwd and all the way up to root
+set tags=./.tags  " will look for .tags file in cwd and all the way up to root
 set cscopetag
 nnoremap <leader>. :CtrlPTag<cr>
 
