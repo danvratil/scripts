@@ -243,6 +243,11 @@ vmap <ScrollWheelRight> <nop>
 vmap <S-ScrollWheelRight> <nop>
 vmap <C-ScrollWheelRight> <nop>
 
+" Map :W to :w and :Wq to :wq because I sometimes don't release the shift to
+" type : fast enough
+:command W w
+:command Wq wq
+
 let g:ycm_rust_src_path = '/usr/lib/rustlib/src/rust/src'
 
 " Automatically save and load folds
