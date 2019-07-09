@@ -96,6 +96,8 @@ set wildignore+=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,*.pyc,.svn,*/cm/log/**,t
 set confirm		" confirm :q, :w or :wq
 set history=50		" keep history of 50 commands
 
+set foldmethod=indent   " ident-based folding
+
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
@@ -242,3 +244,11 @@ vmap <S-ScrollWheelRight> <nop>
 vmap <C-ScrollWheelRight> <nop>
 
 let g:ycm_rust_src_path = '/usr/lib/rustlib/src/rust/src'
+
+" Automatically save and load folds
+augroup AutoSaveFolds
+    autocmd!
+    autocmd BufWinLeave * mkview
+    autocmd BufWinEnter * loadview
+augroup END
+
