@@ -3,6 +3,7 @@ global
 
     # KDE install directory
     kdedir /data/install/kde
+    qtdir /data/install/qt5
 
     # Directory for downloaded source code
     source-dir /data/KDE/src
