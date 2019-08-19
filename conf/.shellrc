@@ -130,6 +130,9 @@ fi
 if [[ ! -z "${_AVAST_PREFIX}" ]] && [[ $XDG_DATA_DIRS != *"${_AVAST_PREFIX}/share:"* ]]; then
     export XDG_DATA_DIRS=${_AVAST_PREFIX}/share:$XDG_DATA_DIRS
 fi
+if [[ $XDG_DATA_DIRS != *"/var/lib/flatpak/exports/share"* ]]; then
+    export XDG_DATA_DIRS=/var/lib/flatpak/exports/share:$XDG_DATA_DIRS
+fi
 if [[ $XDG_DATA_DIRS != *"$HOME/.local/share/flatpak/exports/share"* ]]; then
     export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS
 fi
@@ -155,6 +158,9 @@ if [[ ! -z "${_AVAST_PREFIX}" ]] && [[ $PATH != *"${_AVAST_PREFIX}/bin:"* ]]; th
 fi
 if [[ $PATH != *"$HOME/.local/share/flatpak/exports/bin"* ]]; then
     export PATH=$HOME/.local/share/flatpak/exports/bin:$PATH
+fi
+if [[ $PATH != *"$HOME/.local/bin"* ]]; then
+    export PATH=$HOME/.local/bin:$PATH
 fi
 
 if [[ $KDEDIRS != *"${_KDE_PREFIX}:"* ]]; then
@@ -234,6 +240,7 @@ fi
 
 export KDE_FORK_SLAVES=0
 
+unset XDG_RUNTIME_DIR
 #export XDG_RUNTIME_DIR=/var/run/user/1000
 export SSH_ASKPASS=`which ksshaskpass`
 
