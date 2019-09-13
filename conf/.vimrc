@@ -97,6 +97,7 @@ set confirm		" confirm :q, :w or :wq
 set history=50		" keep history of 50 commands
 
 set foldmethod=indent   " ident-based folding
+set foldlevelstart=20   " prevent folding by default
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
