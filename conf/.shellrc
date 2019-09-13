@@ -34,7 +34,7 @@ alias 'cmake-avast'='cmake -DCMAKE_INSTALL_PREFIX=/data/install/avast -DCMAKE_BU
 alias 'smi'='sudo make -j5 install'
 alias 'kdesrc-build'='/data/KDE/src/kdesrc-build/kdesrc-build'
 alias 'yum'='dnf'
-alias 'fuck'='sudo $(history -p \!\!)'
+#alias 'fuck'='sudo $(history -p \!\!)'
 alias 'kde'='cd /data/KDE/'
 alias 'kdab'='cd /data/KDAB'
 alias 'pastekde'='pastebinit -b paste.kde.org'
@@ -57,6 +57,8 @@ alias 'czechitas'='cd /home/dvratil/Documents/Work/Czechitas'
 #alias nepomukcmd="sopranocmd --socket `kde4-config --path socket`nepomuk-socket --model main --nrl"
 
 alias 'configure-qt5'='../configure -prefix /data/install/qt5 -nomake examples -developer-build -debug -confirm-license -opensource -system-xkbcommon -system-harfbuzz -journald -system-sqlite --cups --ccache'
+
+eval $(thefuck --alias)
 
 # Source avast-specific aliases that can't go to public git
 if [[ -f $HOME/.avastshellrc ]]; then
