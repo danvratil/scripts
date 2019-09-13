@@ -13,8 +13,6 @@ fi
 #export ICECC_CC="/usr/bin/gcc"
 #export ICECC_CXX="/usr/bin/g++"
 
-export ACK_OPTIONS="--ignore-dir=build --ignore-dir=build-debug --ignore-dir=build-release"
-
 alias 'ls'='ls --color'
 alias 'll'='ls -l'
 alias 'sl'='ls'
