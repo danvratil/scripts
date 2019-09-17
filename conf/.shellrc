@@ -14,8 +14,9 @@ fi
 #export ICECC_CXX="/usr/bin/g++"
 
 alias 'ls'='ls --color'
-alias 'll'='ls -l'
+alias 'll'='ls -lAh'
 alias 'sl'='ls'
+alias 'rm'='rm -I'
 alias 'grep'='grep --colour=always'
 #alias 'pacman'='pacman-color'
 #alias 'pacman'='sudo pacman-color'
@@ -244,6 +245,7 @@ unset XDG_RUNTIME_DIR
 #export XDG_RUNTIME_DIR=/var/run/user/1000
 export SSH_ASKPASS=`which ksshaskpass`
 
+export PYTHONSTARTUP=~/.pyrc
 
 # Colorful less
 _default=$(tput sgr0)
