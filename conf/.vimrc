@@ -123,7 +123,8 @@ au BufRead,BufNewFile *.c,*.cpp,*.cxx,*.h,*.hpp
 	\ set textwidth=100 |
 	\ set expandtab |
 	\ set autoindent |
-	\ set fileformat=unix
+	\ set fileformat=unix |
+        \ set matchpairs+=<:>
 
 " CtrlP
 nnoremap <leader>. :CtrlPTag<cr>
@@ -252,9 +253,9 @@ vmap <C-ScrollWheelRight> <nop>
 let g:ycm_rust_src_path = '/usr/lib/rustlib/src/rust/src'
 
 " Automatically save and load folds
-augroup AutoSaveFolds
-    autocmd!
-    autocmd BufWinLeave * mkview
-    autocmd BufWinEnter * loadview
-augroup END
+" augroup AutoSaveFolds
+"     autocmd!
+"     autocmd BufWinLeave * mkview
+"     autocmd BufWinEnter * loadview
+" augroup END
 
