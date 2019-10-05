@@ -28,3 +28,10 @@
 
 [merge]
 	tool = vimdiff
+[git-pull-request]
+	fork = never
+[hub]
+	host = git.int.avast.com
+[alias]
+	rbi = rebase -i --autosquash
+	fixup = !git commit --fixup $(git-commit-base)
