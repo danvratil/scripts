@@ -24,7 +24,7 @@ BASE_FLAGS = [
     '-Wextra',
     '-Wmisleading-indentation',
     '-pedantic',
-    '-std=c++14',
+    '-std=c++17',
     '-xc++',
     '-I/usr/lib/'
     '-I/usr/include/'
@@ -156,7 +156,8 @@ def flags_for_compilation_database(root, filename):
     except:
         return None
 
-def flags_for_file(filename):
+def settings(**kwargs):
+    filename = kwargs['filename']
     root = os.path.realpath(filename)
     compilation_db_flags = flags_for_compilation_database(root, filename)
     if compilation_db_flags:
@@ -174,4 +175,4 @@ def flags_for_file(filename):
         'do_cache': True
     }
 
-FlagsForFile = flags_for_file
+Settings = settings;
