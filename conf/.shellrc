@@ -41,6 +41,7 @@ alias 'kdab'='cd /data/KDAB'
 alias 'pastekde'='pastebinit -b paste.kde.org'
 alias 'qttest'='./target_wrapper.sh'
 alias 'venv'='source ./venv/bin/activate'
+alias 'vim'='vimx'
 alias 'v'='vim'
 if [[ -f /etc/fedora-release ]]; then
     alias 'arc'='/data/random/arcanist/bin/arc'
