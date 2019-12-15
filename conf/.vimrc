@@ -17,6 +17,11 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdTree'
 Plugin 'jistr/vim-nerdtree-tabs'
 
+Plugin 'thaerkh/vim-workspace'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'mhinz/vim-signify'
+Plugin 'vim-scripts/a.vim'
+
 "Plugin 'scrooloose/syntastic'
 "Plugin 'w0rp/ale'
 Plugin 'octol/vim-cpp-enhanced-highlight'
@@ -34,10 +39,17 @@ Plugin 'xolox/vim-easytags'
 
 Plugin 'jewes/Conque-Shell'
 
+Plugin 'francoiscabrol/ranger.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'christoomey/vim-tmux-navigator'
+
+" Themes
 Plugin 'christophermca/meta5'
 Plugin 'sts10/vim-pink-moon'
 Plugin 'joshdick/onedark.vim'
+Plugin 'tomasr/molokai'
 
+" Highlighting
 Plugin 'peterhoeg/vim-qml'
 
 Plugin 'ntpeters/vim-better-whitespace'
@@ -63,7 +75,8 @@ filetype plugin on
 " Use fancy colorscheme
 "colorscheme meta5
 "colorscheme pink-moon
-colorscheme onedark
+let g:rehash256 = 1
+colorscheme molokai
 
 " Transparent background
 hi Normal guibg=NONE ctermbg=NONE
@@ -102,6 +115,9 @@ set foldlevelstart=20   " prevent folding by default
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
+" vim workspace
+let g:workspace_autocreate = 0
+let g:workspace_autosave = 0
 
 " Ctags
 set tags=./.tags  " will look for .tags file in cwd and all the way up to root
@@ -113,7 +129,6 @@ nnoremap <leader>. :CtrlPTag<cr>
 let g:easytags_async = 1
 let g:easytags_always_enabled = 1
 let g:easytags_auto_highlight = 0
-
 
 " Coding style for C++
 au BufRead,BufNewFile *.c,*.cpp,*.cxx,*.h,*.hpp
@@ -149,12 +164,13 @@ let g:tagbar_indent = 1
 let g:tagbar_map_showproto = "r"
 let g:tagbar_map_togglefold = "<space>"
 let g:tagbar_sort = 0
+let g:tagbar_autoclose = 0
 
 " Syntastic
 let g:syntastic_cpp_compiler_options = "-std=c++17"
 
 " NerdTree
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
+map <Leader>n <plug>NERDTreeMirrorToggle<CR>
 
 " Moving
 " move to beginning/end of line
@@ -173,6 +189,7 @@ let g:ycm_confirm_extra_conf = 1
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_error_symbol = '%'
 let g:ycm_warning_symbol = '%'
+let g:ycm_autoclose_preview_window_after_completion = 1
 nnoremap <leader>yj :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>yg :YcmCompleter GoTo<CR>
 nnoremap <leader>yi :YcmCompleter GoToImplementationElseDeclaration<CR>
