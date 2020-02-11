@@ -1,0 +1,7 @@
+[user]
+    name = Daniel Vrátil
+    email = dvratil@kde.org
+    signingkey = 0ABDFA55A4E6BEA99A83EA974D69557AECB13683
+
+[commit]
+    gpgsign = true

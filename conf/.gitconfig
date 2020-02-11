@@ -35,3 +35,10 @@
 [alias]
 	rbi = rebase -i --autosquash
 	fixup = !git commit --fixup $(git-commit-base)
+[submodule]
+#	recurse = true
+
+[includeIf "gitdir:/data/avast/**"]
+    path = ~/.gitconfig.avast
+[includeIf "gitdir:/data/KDE/**"]
+    path = ~/.gitconfig.kde

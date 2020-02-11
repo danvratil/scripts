@@ -1,0 +1,7 @@
+[user]
+    name = Daniel Vrátil
+    email = daniel.vratil@avast.com
+    signingkey = AB5251EEE6A5B79C
+
+[commit]
+    gpgsign = true
