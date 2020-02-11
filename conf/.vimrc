@@ -21,6 +21,7 @@ Plugin 'thaerkh/vim-workspace'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'mhinz/vim-signify'
 Plugin 'vim-scripts/a.vim'
+Plugin 'avanzzzi/behave.vim'
 
 "Plugin 'scrooloose/syntastic'
 "Plugin 'w0rp/ale'
@@ -201,6 +202,7 @@ nnoremap <leader>ys :YcmDiags<CR>
 nnoremap <leader>yD ::YcmForceCompileAndDiagnostics<CR>
 nnoremap <leader>yR :YcmRestartServer<CR>
 nnoremap <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <F11> :YcmCompleter GoToDeclaration<CR>
 nnoremap <F10> :YcmCompleter GetTypeImprecise<CR>
 nnoremap <F9> :YcmCompleter GetDocImprecise<CR>
 "nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
@@ -213,16 +215,16 @@ set list
 set ignorecase
 set hlsearch
 
-" Disable arrow keys in Escape mode
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-" Disable Arrow keys in Insert mode
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+"" Disable arrow keys in Escape mode
+"map <up> <nop>
+"map <down> <nop>
+"map <left> <nop>
+"map <right> <nop>
+"" Disable Arrow keys in Insert mode
+"imap <up> <nop>
+"imap <down> <nop>
+"imap <left> <nop>
+"imap <right> <nop>
 
 " Disable mouse scrolling
 nmap <ScrollWheelUp> <nop>
