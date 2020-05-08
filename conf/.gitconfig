@@ -42,3 +42,5 @@
     path = ~/.gitconfig.avast
 [includeIf "gitdir:/data/KDE/**"]
     path = ~/.gitconfig.kde
+[core]
+	excludesfile = /home/dvratil/.gitignore_global
