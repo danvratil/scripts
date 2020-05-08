@@ -60,8 +60,6 @@ alias 'czechitas'='cd /home/dvratil/Documents/Work/Czechitas'
 
 alias 'configure-qt5'='../configure -prefix /data/install/qt5 -nomake examples -developer-build -debug -confirm-license -opensource -system-xkbcommon -system-harfbuzz -journald -system-sqlite --cups --ccache'
 
-eval $(thefuck --alias)
-
 # Source avast-specific aliases that can't go to public git
 if [[ -f $HOME/.avastshellrc ]]; then
     . $HOME/.avastshellrc
@@ -191,6 +189,7 @@ if [[ ! -z "${_AVAST_PREFIX}" ]]; then
     fi
 fi
 
+QT_PLUGIN_PATH=""
 if [[ $QT_PLUGIN_PATH != *"${_KDE_PREFIX}/lib64/plugins:"* ]]; then
     export QT_PLUGIN_PATH=${_KDE_PREFIX}/lib64/plugins:${_KDE_PREFIX}/lib64/kde4/plugins:${_KDE_PREFIX}/lib64/qt5/plugins:$QT_PLUGIN_PATH
 fi
@@ -198,6 +197,8 @@ if [[ $QT_PLUGIN_PATH != *"${_QT_PREFIX}/plugins:"* ]]; then
     export QT_PLUGIN_PATH=${_QT_PREFIX}/plugins:$QT_PLUGIN_PATH
 fi
 
+
+QML2_IMPORT_PATH=""
 if [[ $QML2_IMPORT_PATH != *"${_KDE_PREFIX}/lib64/qml:"* ]]; then
     export QML2_IMPORT_PATH=${_KDE_PREFIX}/lib64/qml:$QML2_IMPORT_PATH
 fi
@@ -242,8 +243,8 @@ fi
 
 export KDE_FORK_SLAVES=0
 
-unset XDG_RUNTIME_DIR
-#export XDG_RUNTIME_DIR=/var/run/user/1000
+#unset XDG_RUNTIME_DIR
+export XDG_RUNTIME_DIR=/var/run/user/$(id -u)
 export SSH_ASKPASS=`which ksshaskpass`
 
 export PYTHONSTARTUP=~/.pyrc
