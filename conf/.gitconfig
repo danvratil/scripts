@@ -1,8 +1,6 @@
 [user]
 	email = dvratil@kde.org
 	name = Daniel Vrátil
-[url "git@git.kde.org:"]
-	pushInsteadOf = kde:
 [url "https://github.com/"]
 	insteadOf = github:
 [url "git@github.com:"]
@@ -17,9 +15,6 @@
 	required = true
 [pull]
 	rebase = true
-[url "https://anongit.kde.org/"]
-    insteadOf = kde:
-
 [url "git@git.int.avast.com:"]
         insteadOf = avast:
         pushInsteadOf = avast:
@@ -44,3 +39,8 @@
     path = ~/.gitconfig.kde
 [core]
 	excludesfile = /home/dvratil/.gitignore_global
+	whitespace = trailing-space
+[url "https://invent.kde.org/"]
+	insteadOf = kde:
+[url "ssh://git@invent.kde.org/"]
+	pushInsteadOf = kde:

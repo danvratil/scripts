@@ -23,7 +23,7 @@ global
     # Note that ssh-agent must be running and loaded with the right key.
     svn-server svn+ssh://svn@svn.kde.org/home/kde
 
-    cmake-options -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  -DCMAKE_EXE_LINKER_FLAGS="-lstdc++ -lm" -DCMAKE_MODULE_LINKER_FLAGS="-lstdc++ -lm" -DCMAKE_SHARED_LINKER_FLAGS="-lstdc++ -lm"
+    cmake-options -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  -DCMAKE_EXE_LINKER_FLAGS="-lstdc++ -lm" -DCMAKE_MODULE_LINKER_FLAGS="-lstdc++ -lm" -DCMAKE_SHARED_LINKER_FLAGS="-lstdc++ -lm" -DBoost_INCLUDE_DIR=/usr/include
 
 end global
 

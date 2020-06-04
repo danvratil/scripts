@@ -147,6 +147,7 @@ if [[ ! -z "${_AVAST_PREFIX}" ]] && [[ $XDG_CONFIG_DIRS != *"${_AVAST_PREFIX}/et
     export XDG_CONFIG_DIRS=${_AVAST_PREFIX}/etc/xdg:$XDG_CONFIG_DIRS
 fi
 
+export PATH="/data/KDE/src/sysadmin/repo-metadata/git-helpers:${PATH}"
 if [[ $PATH != *"${_KDE_PREFIX}/bin:"* ]]; then
     export PATH=${_KDE_PREFIX}/bin:${_KDE_PREFIX}/libexec/kde4:$PATH
 fi
