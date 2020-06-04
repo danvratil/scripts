@@ -69,7 +69,9 @@ export ZSH_TMUX_AUTOSTART_ONCE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  arcanist
+  alias-finder
+  autojump
+  colored-man-pages
   colorize
   copybuffer
   cp
@@ -77,11 +79,11 @@ plugins=(
   dirpersist
   docker
   dnf
+  emoji
   git
-  gpg-agent
+  jira
   kate
   pass
-  postgres
   python
   virtualenv
   ssh-agent
@@ -90,6 +92,7 @@ plugins=(
   web-search
   zsh_reload
   zsh-autosuggestions
+  zsh-interactive-cd
   # Must the last one
   zsh-syntax-highlighting
 )
