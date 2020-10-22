@@ -1,11 +1,11 @@
 # .shellrc
 
-if [[ -f /etc/fedora-release ]]; then
-    export CC="/usr/lib64/ccache/clang"
-    export CXX="/usr/lib64/ccache/clang++"
-    export LDFLAGS="-fuse-ld=lld"
-    #export CCACHE_PREFIX="colorccache"
-fi
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld"
+export CCACHE_PREFIX="icecc"
+export ICECC_CC=/usr/bin/clang
+export ICECC_CXX=/usr/bin/clang++
 
 #export CFLAGS="-Qunused-arguments -fcolor-diagnostics"
 #export CXXFLAGS="-Qunused-arguments -fcolor-diagnostics"
