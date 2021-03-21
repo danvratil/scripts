@@ -35,6 +35,7 @@ Plugin 'neoclide/coc.nvim'
 Plugin 'm-pilia/vim-ccls'
 Plugin 'jackguo380/vim-lsp-cxx-highlight'
 
+Plugin 'tomtom/tcomment_vim'
 
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 
@@ -121,6 +122,8 @@ set history=50		" keep history of 50 commands
 
 set foldmethod=indent   " ident-based folding
 set foldlevelstart=20   " prevent folding by default
+set showtabline=2       " Extra tab line
+set colorcolumn=120     " show indicator of 120 characters on line
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
@@ -189,69 +192,7 @@ nmap <End> $
 
 " Advanced
 set backspace=indent,eol,start  "Backspace behaviour
-map <F7> mzgg=G`z               "F7 to reindent entire document
 
-" YCM
-" http://stackoverflow.com/questions/3105307/how-do-you-automatically-remove-the-preview-window-after-autocompletion-in-vim
-" :h ins-completion.
-" :YcmDiags - errors
-"let g:ycm_confirm_extra_conf = 1
-"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-"let g:ycm_error_symbol = '%'
-"let g:ycm_warning_symbol = '%'
-"let g:ycm_add_preview_to_completeopt = 1
-"let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_use_clangd = 1
-"let g:ycm_clangd_args = ['--header-insertion=never', '--background-index' ,'--completion-style=detailed', '-j=2', '--clang-tidy']
-"let s:lsp = '/home/dvratil/.vim/lsp-examples'
-"let g:ycm_language_server = [
-"  \   {
-"  \     'name': 'bash',
-"  \     'cmdline': [ 'node', expand( s:lsp . '/bash/node_modules/.bin/bash-language-server' ), 'start' ],
-"  \     'filetypes': [ 'sh', 'bash' ],
-"  \   },
-"  \   {
-"  \     'name': 'yaml',
-"  \     'cmdline': [ 'node', expand( s:lsp . '/yaml/node_modules/.bin/yaml-language-server' ), '--stdio' ],
-"  \     'filetypes': [ 'yaml' ],
-"  \   },
-"  \   {
-"  \     'name': 'json',
-"  \     'cmdline': [ 'node', expand( s:lsp . '/json/node_modules/.bin/vscode-json-languageserver' ), '--stdio' ],
-"  \     'filetypes': [ 'json' ],
-"  \   },
-"  \   { 'name': 'docker',
-"  \     'filetypes': [ 'dockerfile' ],
-"  \     'cmdline': [ expand( s:lsp . '/docker/node_modules/.bin/docker-langserver' ), '--stdio' ]
-"  \   },
-"  \   { 'name': 'vim',
-"  \     'filetypes': [ 'vim' ],
-"  \     'cmdline': [ expand( s:lsp . '/viml/node_modules/.bin/vim-language-server' ), '--stdio' ]
-"  \   },
-"  \   { 'name': 'haskell',
-"  \     'filetypes': [ 'haskell', 'hs', 'lhs' ],
-"  \     'cmdline': [ 'hie-wrapper', '--lsp' ],
-"  \     'project_root_files': [ '.stack.yaml', 'cabal.config', 'package.yaml' ]
-"  \   },
-"  \ ]
-"
-"nnoremap <leader>yj :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"nnoremap <leader>yg :YcmCompleter GoTo<CR>
-"nnoremap <leader>yi :YcmCompleter GoToImplementationElseDeclaration<CR>
-"nnoremap <leader>yt :YcmCompleter GetTypeImprecise<CR>
-"nnoremap <leader>yd :YcmCompleter GetDoc<CR>
-"nnoremap <leader>yf :YcmCompleter FixIt<CR>
-"nnoremap <leader>yr :YcmCompleter GoToReferences<CR>
-"nnoremap <leader>ys :YcmDiags<CR>
-"nnoremap <leader>yD ::YcmForceCompileAndDiagnostics<CR>
-"nnoremap <leader>yR :YcmRestartServer<CR>
-"nnoremap <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"nnoremap <F11> :YcmCompleter GoToDeclaration<CR>
-"nnoremap <F10> :YcmCompleter GetTypeImprecise<CR>
-"nnoremap <F9> :YcmCompleter GetDocImprecise<CR>
-"nmap <leader>D <plug>(YCMHover)
-"nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-"
 
 " COC.VIM (CCLS)
 set hidden
@@ -306,6 +247,12 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
+inoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -460,7 +407,25 @@ vmap <C-ScrollWheelRight> <nop>
 :command W w
 :command Wq wq
 
+" Open a new empty buffer
+nmap <leader>t :enew<CR>
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+" Close the current buffer and move to previous one
+nmap <leader>bq :bp <BAR> bd #<CR>
+" Show all open buffers and their status
+nmap <leader>bl :ls<CR>
+
 let g:ycm_rust_src_path = '/usr/lib/rustlib/src/rust/src'
+
+" Use Ranger when opening new folder
+let g:NERDTreeHijackNetrw = 0
+let g:ranger_replace_netrw = 1
+
+
+" Helpers for using buffers rather than tabs
 
 " Automatically save and load folds
 " augroup AutoSaveFolds
