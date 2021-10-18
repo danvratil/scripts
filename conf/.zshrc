@@ -59,9 +59,12 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# Enable caching 
+ZSH_THEME_GIT_PROMPT_CACHE=1
+
 # Enable TMUX
 export ZSH_TMUX_AUTOSTART="true"
-export ZSH_TMUX_AUTOCONNECT="false"
+export ZSH_TMUX_AUTOCONNECT="true"
 export ZSH_TMUX_AUTOSTART_ONCE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
@@ -81,31 +84,22 @@ plugins=(
   dnf
   emoji
   git
+  git-prompt
   jira
   kate
+  kubectl
   pass
+  podman
   python
   virtualenv
-  ssh-agent
   taskwarrior
   tmux
   web-search
-  zsh_reload
   zsh-autosuggestions
   zsh-interactive-cd
   # Must the last one
   zsh-syntax-highlighting
 )
-
-
-# Setup stuff for ssh-agent
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-if [ $(hostname) = "Brokkr" ]; then
-    zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa.avast id_rsa.fedoraproject id_rsa.redhat id_rsa.qt
-else
-    zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa.fedoraproject id_rsa.redhat id_rsa.qt
-fi
-zstyle :omz:plugins:ssh-agent lifetime 4h
 
 source $ZSH/oh-my-zsh.sh
 
@@ -119,7 +113,7 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # ssh
-export SSH_KEY_PATH="~/.ssh/rsa_id"
+#export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 # VI mode in ZSH
 bindkey -v
