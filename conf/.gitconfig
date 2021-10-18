@@ -8,6 +8,7 @@
 
 [init]
 	templatedir = ~/.git-templates
+	defaultBranch = main
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -40,7 +41,10 @@
 [core]
 	excludesfile = /home/dvratil/.gitignore_global
 	whitespace = trailing-space
+
 [url "https://invent.kde.org/"]
 	insteadOf = kde:
 [url "ssh://git@invent.kde.org/"]
 	pushInsteadOf = kde:
+[commit]
+	gpgsign = true
