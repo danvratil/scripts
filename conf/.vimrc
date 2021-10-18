@@ -30,10 +30,13 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 "C++
 "Plugin 'Valloric/YouCompleteMe'
 "Plugin 'rdnetto/YCM-generator'
-
 Plugin 'neoclide/coc.nvim'
 Plugin 'm-pilia/vim-ccls'
 Plugin 'jackguo380/vim-lsp-cxx-highlight'
+Plugin 'rhysd/vim-clang-format'
+
+"Arduino
+Plugin 'stevearc/vim-arduino'
 
 Plugin 'tomtom/tcomment_vim'
 
@@ -154,6 +157,8 @@ au BufRead,BufNewFile *.c,*.cpp,*.cxx,*.h,*.hpp
 	\ set fileformat=unix |
         \ set matchpairs+=<:>
 
+autocmd BufNewFile,BufReadPost *.ino,*.pde set filetype=cpp
+
 " CtrlP
 nnoremap <leader>. :CtrlPTag<cr>
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
@@ -178,12 +183,20 @@ let g:tagbar_map_showproto = "r"
 let g:tagbar_map_togglefold = "<space>"
 let g:tagbar_sort = 0
 let g:tagbar_autoclose = 0
+autocmd FileType c,cpp,python,js TagbarOpen
+
+" Arduino
+let g:arduino_cmd = '/usr/bin/arduino'
+let g:arduino_use_cli = 1
+let g:arduino_board = 'arduino:avr:uno'
+let g:arduino_dir = '/usr/share/arduino'
 
 " Syntastic
 let g:syntastic_cpp_compiler_options = "-std=c++17"
 
 " NerdTree
 map <Leader>n <plug>NERDTreeMirrorToggle<CR>
+autocmd VimEnter * NERDTree | wincmd p
 
 " Moving
 " move to beginning/end of line
@@ -272,8 +285,11 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+"xmap <leader>f  <Plug>(coc-format-selected)
+"nmap <leader>f  <Plug>(coc-format-selected)
+
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
 augroup mygroup
   autocmd!
