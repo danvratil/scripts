@@ -105,7 +105,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 # User configuration
-. /usr/share/powerline/zsh/powerline.zsh
+#. /usr/share/powerline/zsh/powerline.zsh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
