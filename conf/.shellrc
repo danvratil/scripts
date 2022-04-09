@@ -13,42 +13,28 @@ export ICECC_CXX=/usr/bin/clang++
 #export ICECC_CC="/usr/bin/gcc"
 #export ICECC_CXX="/usr/bin/g++"
 
-alias 'ls'='ls --color'
+alias 'ls'='lsd'
 alias 'll'='ls -lAh'
 alias 'sl'='ls'
 alias 'rm'='rm -I'
 alias 'grep'='grep --colour=always'
 alias 'cat'='bat'
-#alias 'pacman'='pacman-color'
-#alias 'pacman'='sudo pacman-color'
-#alias 'du'='cdu -idh'
 alias 'valhalla'='ssh dvratil@83.167.228.39'
-if [[ -f /etc/fedora-release ]]; then
-    alias 'wine32'='WINEARCH=win32 WINEPREFIX=/data/Games/wine/wine32 wine'
-    alias 'winesteam'='WINEARCH=win32 WINEPREFIX=/data/Games/wine/steam wine $HOME/Games/wine/steam/drive_c/Program\ Files/Steam/steam.exe -no-dwrite'
-    alias 'winegames'='WINEARCH=win32 WINEPREFIX=/data/Games/wine/games wine'
-fi
 
 alias 'aterm'='/usr/bin/aterm -name aterm -sl 3000 -tr -si -sk -sh 20 -fn -misc-fixed-medium-r-normal-*-*-120-*-*-c-*-iso8859-2'
 alias 'cmake-overlay'='cmake .. -DCMAKE_INSTALL_PREFIX=/data/install/kde -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 alias 'cmake-kde'='cmake -DCMAKE_INSTALL_PREFIX=/data/install/kde -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_EXE_LINKER_FLAGS="-lstdc++" -DCMAKE_MODULE_LINKER_FLAGS="-lstdc++" -DCMAKE_SHARED_LINKER_FLAGS="-lstdc++"'
 alias 'cmake-avast'='cmake -DCMAKE_INSTALL_PREFIX=/data/install/avast -DCMAKE_BUILD_TYPE=Debug -DLIB_SUFFIX=64 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
-alias 'smi'='sudo make -j5 install'
 alias 'kdesrc-build'='/data/KDE/src/kdesrc-build/kdesrc-build'
 alias 'yum'='dnf'
+alias 'pacman'='sudo pacman'
 #alias 'fuck'='sudo $(history -p \!\!)'
 alias 'kde'='cd /data/KDE/'
-alias 'kdab'='cd /data/KDAB'
 alias 'pastekde'='pastebinit -b paste.kde.org'
-alias 'qttest'='./target_wrapper.sh'
 alias 'venv'='source ./venv/bin/activate'
-alias 'vim'='vimx'
+#alias 'vim'='vimx'
 alias 'v'='vim'
-if [[ -f /etc/fedora-release ]]; then
-    alias 'arc'='/data/random/arcanist/bin/arc'
-fi
-alias 'pim-docker'='/data/KDE/src/scratch/dvratil/kdepim-docker/run.sh /data/KDE'
-
+#alias 'pim-docker'='/data/KDE/src/scratch/dvratil/kdepim-docker/run.sh /data/KDE'
 alias 'wireshark'='DISPLAY=":0" wireshark >/dev/null 2>&1'
 
 # Avast
@@ -56,10 +42,6 @@ alias 'supe'='su --preserve-environment'
 
 # Czechitas
 alias 'czechitas'='cd /home/dvratil/Documents/Work/Czechitas'
-
-#alias 'akonadidevel'='load_profile pim && /opt/pim-devel/bin/akonadictl --instance devel'
-#alias 'akonadidevel-cleanup'='rm -rf ~/.local/share/akonadi/instance/devel && rm -rf ~/.config/akonadi/instance/devel'
-#alias nepomukcmd="sopranocmd --socket `kde4-config --path socket`nepomuk-socket --model main --nrl"
 
 alias 'configure-qt5'='../configure -prefix /data/install/qt5 -nomake examples -developer-build -debug -confirm-license -opensource -system-xkbcommon -system-harfbuzz -journald -system-sqlite --cups --ccache'
 
@@ -79,14 +61,6 @@ function cdbuild() {
 		cd /data/KDE/src
 	fi
 }
-
-function fedpkgbuild() {
-	for branch in $@; do
-		git checkout $branch
-		fedpkg build --nowait
-	done
-}
-
 
 if [ -e $HOME/.qtversion ]; then
     _QT_VERSION=`cat $HOME/.qtversion`
