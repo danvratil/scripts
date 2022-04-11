@@ -63,6 +63,30 @@ require('packer').startup(function(use)
             'kyazdani42/nvim-web-devicons'
         }
     }
-    use 'nvim-lualine/lualine.nvim'
-    use 'projekt0n/github-nvim-theme'
+    use {
+        'nvim-lualine/lualine.nvim',
+        after = 'github-nvim-theme',
+        requires = {
+            requires = {
+                'kyazdani42/nvim-web-devicons', opt = true
+            }
+        },
+        config = function()
+            require('lualine').setup {
+                options = {
+                    theme = 'github_dimmed'
+                }
+            }
+        end
+    }
+    use {
+        'projekt0n/github-nvim-theme',
+        config = function()
+            require('github-theme').setup({
+                theme_style = 'dimmed',
+                dark_sidebar = false,
+                dark_float = true
+            })
+        end
+    }
 end)
