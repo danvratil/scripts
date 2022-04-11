@@ -188,7 +188,7 @@ export MANPATH=/data/install/kde/share/man:/usr/local/share/man:/usr/share/man
 
 #export XCURSOR_PATH=${_KDE_PREFIX}/share/icons
 
-export EDITOR=vim
+export EDITOR=nvim
 
 #export QT_STYLE_OVERRIDE=breeze
 #export QT_QUICK_CONTROLS_STYLE=Breeze
