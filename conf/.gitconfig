@@ -24,6 +24,7 @@
 
 [merge]
 	tool = vimdiff
+#	conflictStyle = zdiff3
 [git-pull-request]
 	fork = never
 [hub]
@@ -48,3 +49,5 @@
 	pushInsteadOf = kde:
 [commit]
 	gpgsign = true
+[push]
+	autoSetupRemote = true
