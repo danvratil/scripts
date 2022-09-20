@@ -100,11 +100,11 @@ plugins=(
   kate
   kubectl
   pass
-  podman
   python
   virtualenv
   taskwarrior
   tmux
+  yarn
   web-search
   zsh-autosuggestions
   zsh-interactive-cd
@@ -173,3 +173,5 @@ source ~/.shellrc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+source /usr/share/nvm/init-nvm.sh
