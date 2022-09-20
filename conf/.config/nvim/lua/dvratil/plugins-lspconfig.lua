@@ -33,3 +33,6 @@ lspconfig.kotlin_language_server.setup {
     capabilities = capabilities,
     root_dir = util.root_pattern("pom.xml")
 }
+lspconfig.rust_analyzer.setup {
+    capabilities = update_capabilities
+}

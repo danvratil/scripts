@@ -28,6 +28,12 @@ require('packer').startup(function(use)
     use 'nvim-treesitter/nvim-treesitter'
     use 'neovim/nvim-lspconfig' -- default configurations for various LSPs
     use 'udalov/kotlin-vim' -- kotlin highlighting
+    use {
+        'simrat39/rust-tools.nvim', -- rust autocompletion
+        config = function()
+            require('rust-tools').setup({})
+	end
+    }
 
     -- Autocompletion
     use 'hrsh7th/cmp-nvim-lsp'
