@@ -20,7 +20,8 @@ lspconfig.jedi_language_server.setup {
     capabilities = capabilities
 }
 lspconfig.html.setup {
-    capabilities = capabilities
+    capabilities = capabilities,
+    cmd = { "vscode-html-languageserver", "--stdio" }
 }
 lspconfig.tsserver.setup {
     capabilities = capabilities
