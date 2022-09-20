@@ -242,6 +242,10 @@ if [ -f ~/.cargo/env ]; then
     source ~/.cargo/env
 fi
 
+# Fly.io cli
+export FLYCTL_INSTALL="$HOME/.fly"
+export PATH="$FLYCTL_INSTALL:$PATH"
+
 
 # .cht.sh
 if [ -f ~/.bash.d/cht.sh ]; then
