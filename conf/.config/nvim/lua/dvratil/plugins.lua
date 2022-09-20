@@ -27,6 +27,7 @@ require('packer').startup(function(use)
     use 'ntpeters/vim-better-whitespace'
     use 'nvim-treesitter/nvim-treesitter'
     use 'neovim/nvim-lspconfig' -- default configurations for various LSPs
+    use 'udalov/kotlin-vim' -- kotlin highlighting
 
     -- Autocompletion
     use 'hrsh7th/cmp-nvim-lsp'

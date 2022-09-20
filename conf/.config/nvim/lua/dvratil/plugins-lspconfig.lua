@@ -2,6 +2,7 @@ require("dvratil.mappings").registerLSPMappings()
 
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local util = require('lspconfig.util')
 
 lspconfig.bashls.setup {
     capabilities = capabilities
@@ -27,4 +28,7 @@ lspconfig.tsserver.setup {
 lspconfig.vuels.setup {
     capabilities = capabilities
 }
-
+lspconfig.kotlin_language_server.setup {
+    capabilities = capabilities,
+    root_dir = util.root_pattern("pom.xml")
+}
