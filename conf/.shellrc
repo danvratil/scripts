@@ -246,6 +246,9 @@ fi
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL:$PATH"
 
+if [ -f /usr/share/nvm/init-nvm.sh ]; then
+    source /usr/share/nvm/init-nvm.sh
+fi
 
 # .cht.sh
 if [ -f ~/.bash.d/cht.sh ]; then
