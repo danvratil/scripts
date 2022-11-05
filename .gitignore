@@ -1,2 +1,5 @@
 __pycache__
 *.pyc
+
+# neovim
+packer_compiled.lua
