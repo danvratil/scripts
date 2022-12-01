@@ -42,3 +42,6 @@ lspconfig.terraformls.setup{
 lspconfig.qml_lsp.setup {
     capabilities = capabilities
 }
+lspconfig.marksman.setup{
+    capabilities = capabilities
+}
