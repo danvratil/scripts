@@ -36,3 +36,6 @@ lspconfig.kotlin_language_server.setup {
 lspconfig.rust_analyzer.setup {
     capabilities = update_capabilities
 }
+lspconfig.terraformls.setup{
+    capabilities = capabilities
+}
