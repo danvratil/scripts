@@ -39,3 +39,6 @@ lspconfig.rust_analyzer.setup {
 lspconfig.terraformls.setup{
     capabilities = capabilities
 }
+lspconfig.qml_lsp.setup {
+    capabilities = capabilities
+}

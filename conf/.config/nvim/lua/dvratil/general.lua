@@ -45,3 +45,11 @@ set.termguicolors = true
 set.completeopt = 'menu,menuone,noselect' -- allow autocompletion
 
 vim.notify = require('notify')
+
+vim.filetype.add({
+    extension = {
+        qml = 'qmljs'
+    }
+})
+
+vim.cmd('colorscheme github_dimmed')
