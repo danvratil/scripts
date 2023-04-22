@@ -31,6 +31,7 @@ require('packer').startup(function(use)
 
     -- General Programming
     use 'lukas-reineke/indent-blankline.nvim'
+    use 'sbdchd/neoformat'
     use 'ntpeters/vim-better-whitespace'
     use 'nvim-treesitter/nvim-treesitter'
     use 'neovim/nvim-lspconfig' -- default configurations for various LSPs
@@ -95,7 +96,7 @@ require('packer').startup(function(use)
         config = function()
             require('lualine').setup {
                 options = {
-                    theme = 'github_dimmed'
+                   theme = 'auto'
                 }
             }
         end
@@ -103,11 +104,18 @@ require('packer').startup(function(use)
     use {
         'projekt0n/github-nvim-theme',
         config = function()
-            require('github-theme').setup({
-                theme_style = 'dimmed',
-                dark_sidebar = false,
-                dark_float = true
-            })
+            require('github-theme').setup {
+                options = {
+                    darken = {
+                        float = true,
+                        sidebar = {
+                            enabled = true
+                        }
+                    }
+                }
+            }
+            vim.cmd('colorscheme github_dimmed')
         end
     }
 end)
+
