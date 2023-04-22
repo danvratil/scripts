@@ -21,6 +21,13 @@ require('packer').startup(function(use)
 
     -- General
     use 'folke/which-key.nvim'
+    use 'ldelossa/nvim-ide'
+    use {
+        'rcarriga/nvim-notify',
+        config = function()
+            require('notify').setup({})
+        end
+    }
 
     -- General Programming
     use 'lukas-reineke/indent-blankline.nvim'
@@ -29,11 +36,18 @@ require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig' -- default configurations for various LSPs
     use 'udalov/kotlin-vim' -- kotlin highlighting
     use {
+        'dnlhc/glance.nvim',
+        config = function()
+            require('glance').setup({})
+        end
+    }
+    use {
         'simrat39/rust-tools.nvim', -- rust autocompletion
         config = function()
             require('rust-tools').setup({})
-	end
+        end
     }
+    use 'folke/trouble.nvim'
 
     -- Autocompletion
     use 'hrsh7th/cmp-nvim-lsp'
@@ -49,7 +63,8 @@ require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',
         requires = {
             'nvim-lua/plenary.nvim', -- Utility functions for Lua
-            'nvim-treesitter/nvim-treesitter' -- Optional
+            'nvim-treesitter/nvim-treesitter', -- Optional
+            'nvim-telescope/telescope-ui-select.nvim'
         }
     }
     use {

@@ -43,3 +43,5 @@ set.backspace = 'indent,eol,start' -- make deleting natural
 set.termguicolors = true
 
 set.completeopt = 'menu,menuone,noselect' -- allow autocompletion
+
+vim.notify = require('notify')

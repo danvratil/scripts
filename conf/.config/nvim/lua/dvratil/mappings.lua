@@ -25,6 +25,17 @@ function mappings:mapTelescope()
     map('n', '<Leader>fh', ':Telescope help_tags<CR>', snr)
 end
 
+function mappings:mapIDE()
+    map('n', '<Leader>fw', ':Workspace<CR>', snr) -- uses telescope, hence fw
+    map('n', '<Leader>ww', ':Workspace<CR>', snr) -- uses telescope, hence fw
+    map('n', '<Leader>wo', ':Workspace Outline Focus<CR>', snr)
+    map('n', '<Leader>wb', ':Workspace BufferList Focus<CR>', snr)
+    map('n', '<Leader>we', ':Workspace Explorer Focus<CR>', snr)
+    map('n', '<Leader>wg', ':Workspace RightPanelToggle<CR>', snr)
+    map('n', '<Leader>wtb', ':Workspace TerminalBrowser Focus<CR>', snr)
+    map('n', '<Leader>wt', ':Workspace Terminal Focus<CR>', snr)
+    map('n', '<Leader>wr', ':Workspace Reset<CR>', snr)
+end
 
 function mappings:registerLSPMappings()
     -- See ":help vim.lsp.*" for docs on any of the below functions
@@ -36,6 +47,12 @@ function mappings:registerLSPMappings()
     map('n', '?R', '<cmd>Telescope lsp_references<CR>', snr) -- references to the word under cursor
     map('n', '?T', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', snr) -- find any type in the workspace dnyamically
     map('n', '?i', '<cmd>Telescope lsp_implementations<CR>', snr) -- find implementations of an interface
+
+    map('n', '<Leader>Ff', '<cmd>lua vim.lsp.buf.formatting()<CR>', snr)
+end
+
+function mappings:registerTroubleMappings()
+    map('n', '<Leader>wx', '<cmd>TroubleToggle<CR>', snr)
 end
 
 return mappings
