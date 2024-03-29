@@ -1,20 +1,9 @@
 # -*- coding: iso-8859-1 -*-
 # Pretty-printers for Qt 4 and Qt 5.
 
-# Copyright (C) 2009 Niko Sams <niko.sams@gmail.com>
-
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# SPDX-FileCopyrightText: 2009 Niko Sams <niko.sams@gmail.com>
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 import gdb
 import itertools
@@ -29,15 +18,21 @@ class QStringPrinter:
         self.val = val
 
     def to_string(self):
-        size = self.val['d']['size']
         ret = ""
 
-        # The QString object might be not yet initialized. In this case size is a bogus value
-        # and the following 2 lines might throw memory access error. Hence the try/catch.
+        # The QString object may not be initialized yet. In this case 'size' is a bogus value
+        # or in case of Qt5, 'd' is an invalid pointer and the following lines might throw memory
+        # access error. Hence the try/catch.
         try:
+            size = self.val['d']['size']
+            if size == 0:
+                return ret
             isQt4 = has_field(self.val['d'], 'data') # Qt4 has d->data, Qt5 doesn't.
+            isQt6 = has_field(self.val['d'], 'ptr') # Qt6 has d->ptr, Qt5 doesn't.
             if isQt4:
                 dataAsCharPointer = self.val['d']['data'].cast(gdb.lookup_type("char").pointer())
+            elif isQt6:
+                dataAsCharPointer = self.val['d']['ptr'].cast(gdb.lookup_type("char").pointer())
             else:
                 dataAsCharPointer = (self.val['d'] + 1).cast(gdb.lookup_type("char").pointer())
             ret = dataAsCharPointer.string(encoding = 'UTF-16', length = size * 2)
@@ -55,6 +50,8 @@ class QByteArrayPrinter:
         self.val = val
         # Qt4 has 'data', Qt5 doesn't
         self.isQt4 = has_field(self.val['d'], 'data')
+        # Qt6 has d.ptr, Qt5 doesn't
+        self.isQt6 = has_field(self.val['d'], 'ptr')
 
     class _iterator(Iterator):
         def __init__(self, data, size):
@@ -75,6 +72,8 @@ class QByteArrayPrinter:
     def stringData(self):
         if self.isQt4:
             return self.val['d']['data']
+        elif self.isQt6:
+            return self.val['d']['ptr'].cast(gdb.lookup_type("char").pointer())
         else:
             return self.val['d'].cast(gdb.lookup_type("char").const().pointer()) + self.val['d']['offset']
 
@@ -124,35 +123,47 @@ class QListPrinter:
             return self
 
         def __next__(self):
-            if self.count >= self.d['end'] - self.d['begin']:
+            isQt6 = has_field(self.d, 'size')
+            if isQt6:
+                size = self.d['size']
+            else:
+                size = self.d['end'] - self.d['begin']
+
+            if self.count >= size:
                 raise StopIteration
             count = self.count
-            array = self.d['array'].address + self.d['begin'] + count
-            if self.externalStorage:
-                value = array.cast(gdb.lookup_type('QList<%s>::Node' % self.nodetype).pointer())['v']
+
+            if isQt6:
+                value = self.d['ptr'] + count
             else:
-                value = array
+                array = self.d['array'].address + self.d['begin'] + count
+                if self.externalStorage:
+                    value = array.cast(gdb.lookup_type('QList<%s>::Node' % self.nodetype).pointer())['v']
+                else:
+                    value = array
             self.count = self.count + 1
             return ('[%d]' % count, value.cast(self.nodetype.pointer()).dereference())
 
     def __init__(self, val, container, itype):
-        self.val = val
+        self.d = val['d']
         self.container = container
+        self.isQt6 = has_field(self.d, 'size')
+
+        if self.isQt6:
+            self.size = self.d['size']
+        else:
+            self.size = self.d['end'] - self.d['begin']
+
         if itype == None:
-            self.itype = self.val.type.template_argument(0)
+            self.itype = val.type.template_argument(0)
         else:
             self.itype = gdb.lookup_type(itype)
 
     def children(self):
-        return self._iterator(self.itype, self.val['d'])
+        return self._iterator(self.itype, self.d)
 
     def to_string(self):
-        if self.val['d']['end'] == self.val['d']['begin']:
-            empty = "empty "
-        else:
-            empty = ""
-
-        return "%s%s<%s>" % ( empty, self.container, self.itype )
+        return "%s<%s> (size = %s)" % ( self.container, self.itype, self.size )
 
 class QVectorPrinter:
     "Print a QVector"
@@ -189,12 +200,9 @@ class QVectorPrinter:
             return self._iterator(self.itype, data.cast(self.itype.pointer()), self.val['d']['size'])
 
     def to_string(self):
-        if self.val['d']['size'] == 0:
-            empty = "empty "
-        else:
-            empty = ""
+        size = self.val['d']['size']
 
-        return "%s%s<%s>" % ( empty, self.container, self.itype )
+        return "%s<%s> (size = %s)" % ( self.container, self.itype, size )
 
 class QLinkedListPrinter:
     "Print a QLinkedList"
@@ -227,12 +235,9 @@ class QLinkedListPrinter:
         return self._iterator(self.itype, self.val['e']['n'], self.val['d']['size'])
 
     def to_string(self):
-        if self.val['d']['size'] == 0:
-            empty = "empty "
-        else:
-            empty = ""
+        size = self.val['d']['size']
 
-        return "%sQLinkedList<%s>" % ( empty, self.itype )
+        return "QLinkedList<%s> (size = %s)" % ( self.itype, size )
 
 class QMapPrinter:
     "Print a QMap"
@@ -252,7 +257,7 @@ class QMapPrinter:
             if gdb.parse_and_eval:
                 ret = int(gdb.parse_and_eval('QMap<%s, %s>::payload()' % (self.ktype, self.vtype)))
                 if (ret): return ret;
-            
+
             #if the inferior function call didn't work, let's try to calculate ourselves
 
             #we can't use QMapPayloadNode as it's inlined
@@ -271,7 +276,7 @@ class QMapPrinter:
                 ret += 2
 
             ret -= gdb.lookup_type('void').pointer().sizeof
-            
+
             return ret
 
         def concrete (self, data_node):
@@ -367,12 +372,9 @@ class QMapPrinter:
             return self._iteratorQt5(self.val)
 
     def to_string(self):
-        if self.val['d']['size'] == 0:
-            empty = "empty "
-        else:
-            empty = ""
+        size = self.val['d']['size']
 
-        return "%s%s<%s, %s>" % ( empty, self.container, self.val.type.template_argument(0), self.val.type.template_argument(1) )
+        return "%s<%s, %s> (size = %s)" % ( self.container, self.val.type.template_argument(0), self.val.type.template_argument(1), size )
 
     def display_hint (self):
         return 'map'
@@ -380,7 +382,7 @@ class QMapPrinter:
 class QHashPrinter:
     "Print a QHash"
 
-    class _iterator(Iterator):
+    class _qt5_iterator(Iterator):
         def __init__(self, val):
             self.val = val
             self.d = self.val['d']
@@ -469,20 +471,79 @@ class QHashPrinter:
             self.count = self.count + 1
             return ('[%d]' % self.count, item)
 
+    class _qt6_iterator(Iterator):
+        # Copied from SpanConstants (qhash.h)
+        SpanShift = 7
+        NEntries = 1 << SpanShift
+        LocalBucketMask = NEntries - 1
+        UnusedEntry = 0xff
+
+        def __init__(self, val):
+            self.val = val
+            self.bucket = 0
+            self.spans = self.val['d']['spans']
+            self.count = 0
+            self.numBuckets = self.val['d']['numBuckets']
+            self.nextNode()
+
+        def __iter__(self):
+            return self
+
+        def span(self):
+            return self.bucket >> self.SpanShift
+
+        def index(self):
+            return self.bucket & self.LocalBucketMask
+
+        def isUnused(self):
+            span = self.spans[self.span()]
+            return span['offsets'][self.index()] == self.UnusedEntry
+
+        def hashNode(self):
+            span = self.spans[self.span()]
+            nodeType = span.type.template_argument(0).name
+            offset = span['offsets'][self.index()]
+            entry = span['entries'][offset]
+            return entry['storage'].cast(gdb.lookup_type(nodeType))
+
+        def nextNode(self):
+            while True:
+                self.bucket += 1
+                if self.bucket == self.numBuckets:
+                    raise StopIteration
+                if not self.isUnused():
+                    break
+
+        def __next__(self):
+            node = self.hashNode()
+
+            if self.count % 2 == 0:
+                item = node['key']
+            else:
+                item = node['value']
+                self.nextNode()
+
+            self.count = self.count + 1
+            return ('[%d]' % self.count, item)
+
+
     def __init__(self, val, container):
         self.val = val
         self.container = container
 
+    def _full_container_type(self):
+        return "%s<%s, %s>" % (self.container, self.val.type.template_argument(0), self.val.type.template_argument(1))
+
     def children(self):
-        return self._iterator(self.val)
+        if self.val["d"].type.target().name == ('%s::Data' % self._full_container_type()):
+            return self._qt6_iterator(self.val)
+        else:
+            return self._qt5_iterator(self.val)
 
     def to_string(self):
-        if self.val['d']['size'] == 0:
-            empty = "empty "
-        else:
-            empty = ""
+        size = self.val['d']['size']
 
-        return "%s%s<%s, %s>" % ( empty, self.container, self.val.type.template_argument(0), self.val.type.template_argument(1) )
+        return "%s (size = %s)" % ( self._full_container_type(), size )
 
     def display_hint (self):
         return 'map'
@@ -569,6 +630,8 @@ class QUrlPrinter:
             string_pointer = string_type.pointer()
 
             addr = self.val['d'].cast(gdb.lookup_type('char').pointer())
+            if not addr:
+                return "<invalid>"
             # skip QAtomicInt ref
             addr += int_type.sizeof
             # handle int port
@@ -666,12 +729,9 @@ class QSetPrinter:
         return self._iterator(hashIterator)
 
     def to_string(self):
-        if self.val['q_hash']['d']['size'] == 0:
-            empty = "empty "
-        else:
-            empty = ""
+        size = self.val['q_hash']['d']['size']
 
-        return "%sQSet<%s>" % ( empty , self.val.type.template_argument(0) )
+        return "QSet<%s> (size = %s)" % ( self.val.type.template_argument(0), size )
 
 
 class QCharPrinter:
@@ -691,7 +751,7 @@ class QUuidPrinter:
         self.val = val
 
     def to_string(self):
-        return "QUuid({%x-%x-%x-%x%x-%x%x%x%x%x%x})" % (int(self.val['data1']), int(self.val['data2']), int(self.val['data3']),
+        return "QUuid({%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x})" % (int(self.val['data1']), int(self.val['data2']), int(self.val['data3']),
                                             int(self.val['data4'][0]), int(self.val['data4'][1]),
                                             int(self.val['data4'][2]), int(self.val['data4'][3]),
                                             int(self.val['data4'][4]), int(self.val['data4'][5]),
@@ -699,6 +759,50 @@ class QUuidPrinter:
 
     def display_hint (self):
         return 'string'
+
+class QVariantPrinter:
+
+    def __init__(self, val):
+        self.val = val
+
+    def to_string(self):
+        d = self.val['d']
+
+        if d['is_null']:
+            return "QVariant(NULL)"
+
+        data_type = d['type']
+        type_str = ("type = %d" % data_type)
+        try:
+            typeAsCharPointer = (gdb.parse_and_eval("QVariant::typeToName(%d)" % data_type).cast(gdb.lookup_type("char").pointer()))
+            if typeAsCharPointer:
+                type_str = typeAsCharPointer.string(encoding = 'UTF-8')
+        except Exception as e:
+            pass
+
+        data = d['data']
+        is_shared = d['is_shared']
+        value_str = ""
+        if is_shared:
+            private_shared = data['shared'].dereference()
+            value_str = "PrivateShared(%s)" % hex(private_shared['ptr'])
+        elif type_str.startswith("type = "):
+            value_str = str(data['ptr'])
+        else:
+            type_obj = None
+            try:
+                type_obj = gdb.lookup_type(type_str)
+            except Exception as e:
+                value_str = str(data['ptr'])
+            if type_obj:
+                if type_obj.sizeof > type_obj.pointer().sizeof:
+                    value_ptr = data['ptr'].reinterpret_cast(type_obj.const().pointer())
+                    value_str = str(value_ptr.dereference())
+                else: 
+                    value_ptr = data['c'].address.reinterpret_cast(type_obj.const().pointer())
+                    value_str = str(value_ptr.dereference())
+
+        return "QVariant(%s, %s)" % (type_str, value_str)
 
 pretty_printers_dict = {}
 
@@ -728,7 +832,7 @@ def build_dictionary ():
     pretty_printers_dict[re.compile('^QSet<.*>$')] = lambda val: QSetPrinter(val)
     pretty_printers_dict[re.compile('^QChar$')] = lambda val: QCharPrinter(val)
     pretty_printers_dict[re.compile('^QUuid')] = lambda val: QUuidPrinter(val)
+    pretty_printers_dict[re.compile('^QVariant')] = lambda val: QVariantPrinter(val)
 
 
 build_dictionary ()
-register_qt_printers (None)
