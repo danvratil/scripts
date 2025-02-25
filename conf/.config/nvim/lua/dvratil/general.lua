@@ -52,4 +52,4 @@ vim.filetype.add({
     }
 })
 
-vim.cmd('colorscheme github_dimmed')
+vim.cmd('colorscheme github_dark_dimmed')

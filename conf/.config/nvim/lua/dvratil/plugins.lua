@@ -116,7 +116,7 @@ require('packer').startup(function(use)
                     }
                 }
             }
-            vim.cmd('colorscheme github_dimmed')
+            vim.cmd('colorscheme github_dark_dimmed')
         end
     }
 end)
