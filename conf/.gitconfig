@@ -17,13 +17,14 @@
 [pull]
 	rebase = true
 [url "git@git.int.avast.com:"]
-        insteadOf = avast:
-        pushInsteadOf = avast:
+	insteadOf = avast:
+	pushInsteadOf = avast:
 [mergetool]
-        prompt = false
+	prompt = false
 
 [merge]
-	tool = vimdiff
+	tool = mergiraf
+
 #	conflictStyle = zdiff3
 [git-pull-request]
 	fork = never
@@ -35,19 +36,60 @@
 [submodule]
 #	recurse = true
 
-[includeIf "gitdir:/data/avast/**"]
-    path = ~/.gitconfig.avast
-[includeIf "gitdir:/data/KDE/**"]
-    path = ~/.gitconfig.kde
 [core]
-	excludesfile = /home/dvratil/.gitignore_global
-	whitespace = trailing-space
+	excludesfile = $HOME/.gitignore_global
+	whitespace = trailing-space,space-before-tab
+	autocrlf = false
+	attributesfile = $HOME/.gitattributes
 
 [url "https://invent.kde.org/"]
 	insteadOf = kde:
 [url "ssh://git@invent.kde.org/"]
 	pushInsteadOf = kde:
-[commit]
-	gpgsign = true
 [push]
-	autoSetupRemote = true
+	autosetupremote = true
+	default = simple
+	followTags = true
+[blame]
+	ignoreRevsFile =
+[apply]
+	whitespace = fix
+
+[difftool "difftastic"]
+	# See `man git-difftool` for a description of MERGED, LOCAL and REMOTE.
+	cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
+[pager]
+	difftool = true
+[diff]
+	tool = difftastic
+	external = difft
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicprefix = true
+	renames = true
+
+[merge "mergiraf"]
+	name = mergiraf
+	driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
+
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
