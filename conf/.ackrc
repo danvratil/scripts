@@ -1,3 +1,6 @@
 --ignore-dir=build
 --ignore-dir=build-debug
 --ignore-dir=builg-release
+--ignore-dir=.ccls-cache
+--ignore-dir=target
+--ignore-dir=rust_analyzer_target
